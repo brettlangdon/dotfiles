@@ -1,0 +1,14 @@
+[user]
+	name = brettlangdon
+	email = brett@blangdon.com
+[credential]
+	helper = osxkeychain
+[core]
+	excludesfile = /Users/brettlangdon/.gitignore_global
+	editor = emacs
+[alias]
+	st = status
+	d = diff --color --minimal
+	dc = diff --color --minimal --cached
+[diff]
+	algorithm = patience
