@@ -13,6 +13,13 @@
 (setq require-final-newline t)
 (setq mode-require-final-newline t)
 
+;highlight current line
+(global-hl-line-mode 1)
+;enable line numbers
+(global-linum-mode 1)
+
+(custom-set-variables '(linum-format (quote "%3d |")))
+
 ;remove trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
