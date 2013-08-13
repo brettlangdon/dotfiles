@@ -38,6 +38,11 @@
 (require 'flymake-cursor)
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 
+(require 'projectile)
+(setq projectile-completion-system 'grizzl)
+(setq projectile-use-native-indexing t)
+(setq projectile-enable-caching t)
+
 (elpy-enable)
 
 ;call gofmt on the script when saving
