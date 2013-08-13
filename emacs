@@ -15,9 +15,9 @@
 
 ;highlight current line
 (global-hl-line-mode 1)
+(set-face-background hl-line-face "gray13")
 ;enable line numbers
 (global-linum-mode 1)
-
 (custom-set-variables '(linum-format (quote "%3d |")))
 
 ;remove trailing whitespace
@@ -53,4 +53,4 @@
 
 ;solarize ALL the things
 (color-theme-initialize)
-(color-theme-solarized-dark)
+(color-theme-clarity)
