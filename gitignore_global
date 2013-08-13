@@ -3,3 +3,5 @@
 *#*#
 .ropeproject
 *_flymake*
+*.venv
+*.projectile

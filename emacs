@@ -42,6 +42,7 @@
 (setq projectile-completion-system 'grizzl)
 (setq projectile-use-native-indexing t)
 (setq projectile-enable-caching t)
+(projectile-global-mode)
 
 (elpy-enable)
 
