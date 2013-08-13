@@ -1,5 +1,6 @@
 ; load all the other good things
 (add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/powerline-2.2")
 
 ;disable backup
 (setq backup-inhibited t)
@@ -54,3 +55,5 @@
 ;solarize ALL the things
 (color-theme-initialize)
 (color-theme-clarity)
+(require 'powerline)
+(powerline-default-theme)
