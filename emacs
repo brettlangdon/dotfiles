@@ -1,6 +1,7 @@
 ; load all the other good things
 (add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d/powerline-2.2")
+(add-to-list 'load-path "~/.emacs.d/elpa/projectile-0.9.2")
 
 ;disable backup
 (setq backup-inhibited t)
@@ -41,9 +42,8 @@
 
 (require 'projectile)
 (setq projectile-completion-system 'grizzl)
-(setq projectile-use-native-indexing t)
 (setq projectile-enable-caching t)
-(projectile-global-mode)
+(projectile-global-mode t)
 
 (elpy-enable)
 
