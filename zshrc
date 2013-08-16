@@ -50,6 +50,6 @@ alias up="vagrant up && vagrant ssh"
 source /usr/local/bin/virtualenvwrapper.sh
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export CHEF_PATH=~/Desktop/chef-repo
+export CHEF_PATH=~/Magnetic/chef-repo
 unsetopt inc_append_history
 unsetopt share_history # share command history data
