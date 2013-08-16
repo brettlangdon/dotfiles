@@ -33,3 +33,6 @@ for file in $files; do
 	ln -s $dir/$file ~/.$file
     fi
 done
+
+echo "Installing Elpy"
+sudo pip install elpy
