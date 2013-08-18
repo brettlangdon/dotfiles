@@ -36,3 +36,16 @@ done
 
 echo "Installing Elpy"
 sudo pip install elpy
+
+echo "Installing Virtualenvwrapper"
+sudo pip install virtualenvwrapper
+
+source ~/.zshrc
+echo "Setting up GOPATH"
+mkdir -p $GOPATH
+
+echo "Setting up CHEF_PATH"
+mkdir -p $CHEF_PATH
+
+echo "Setting up WORKON_HOME"
+mkdir -p $WORKON_HOME
