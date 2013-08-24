@@ -35,7 +35,7 @@ for file in $files; do
 done
 
 echo "Installing Elpy"
-sudo pip install elpy
+sudo pip install elpy rope
 
 echo "Installing Virtualenvwrapper"
 sudo pip install virtualenvwrapper
