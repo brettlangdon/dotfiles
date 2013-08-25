@@ -10,6 +10,7 @@ export PATH=/usr/local/Cellar/ruby/1.9.3-p374/bin:/usr/local/bin:/usr/local/sbin
 export WORKON_HOME=~/environments
 alias up="vagrant up && vagrant ssh"
 source /usr/local/bin/virtualenvwrapper.sh
+export NODE_PATH=/usr/local/lib/node_modules
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export CHEF_PATH=~/Magnetic/chef-repo
