@@ -52,6 +52,10 @@
 	  '(lambda ()
 	     (add-hook 'before-save-hook 'gofmt)))
 
+;js-mode overwrites json-mode when loading .json files, so this is
+; to force json-mode for .json files
+(add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
+
 ;solarize ALL the things
 (color-theme-initialize)
 (color-theme-clarity)
