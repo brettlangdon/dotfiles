@@ -29,8 +29,8 @@ for file in $files; do
     then
 	echo "Moving $file to $olddir/$file"
 	mv ~/.$file $olddir
-	echo "Creating symlink to $file in home directory."
-	ln -s $dir/$file ~/.$file
+        echo "Creating symlink to $file in home directory."
+        ln -s $dir/$file ~/.$file
     fi
 done
 
@@ -40,12 +40,23 @@ sudo pip install elpy rope
 echo "Installing Virtualenvwrapper"
 sudo pip install virtualenvwrapper
 
-source ~/.zshrc
+echo "Setting up $WORKON_HOME"
+WORKON_HOME=~/environments
+mkdir -p WORKON_HOME
+file="postactivate"
+if [ -e $file ]
+then
+    echo "Moving $WORKON_HOME/$file to $olddir/$file"
+    mv $WORKON_HOME/$file $olddir
+    echo "Creating symlink to $file in $WORKON_HOME directory."
+    ln -s $dir/$file $WORKON_HOME/$file
+fi
+
 echo "Setting up GOPATH"
 mkdir -p $GOPATH
 
 echo "Setting up CHEF_PATH"
 mkdir -p $CHEF_PATH
 
-echo "Setting up WORKON_HOME"
-mkdir -p $WORKON_HOME
+echo "Source ~/.zshrc"
+source ~/.zshrc

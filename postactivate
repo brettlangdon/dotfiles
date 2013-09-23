@@ -1,0 +1,11 @@
+#!/bin/zsh
+# This hook is run after every virtualenv is activated.
+
+proj_name=$(echo $VIRTUAL_ENV|awk -F'/' '{print $NF}')
+if [ -d ~/Magnetic/$proj_name ]
+then
+    cd ~/Magnetic/$proj_name
+elif [ -d ~/src/$proj_name ]
+then
+    cd ~/src/$proj_name
+fi
