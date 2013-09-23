@@ -28,6 +28,9 @@
 ;disable vc-git (dont use it and too slow to start up)
 (setq vc-handled-backends nil)
 
+;dont use tabs!
+(setq-default indent-tabs-mode nil)
+
 ;auto-indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
@@ -39,6 +42,9 @@
 
 (require 'flymake-cursor)
 (add-hook 'find-file-hook 'flymake-find-file-hook)
+
+(require 'flymake-jshint)
+(add-hook 'js-mode-hook 'flymake-mode)
 
 (require 'projectile)
 (setq projectile-completion-system 'grizzl)
