@@ -1,3 +1,4 @@
 *.cache
 *.dat
 *projectile-bookmarks.eld
+emacs.d/elpa/archives
