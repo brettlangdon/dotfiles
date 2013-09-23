@@ -2,7 +2,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="bira"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(git brew pip python node npm urltools golang)
+plugins=(git brew pip python node npm urltools golang knife)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -16,3 +16,6 @@ export PATH=$PATH:$GOPATH/bin
 export CHEF_PATH=~/Magnetic/chef-repo
 unsetopt inc_append_history
 unsetopt share_history # share command history data
+alias cr="codereivew"
+alias crr="codereview --reviewers"
+alias cri="codereview --issue"
