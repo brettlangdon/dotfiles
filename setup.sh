@@ -42,7 +42,7 @@ sudo pip install virtualenvwrapper
 
 echo "Setting up $WORKON_HOME"
 WORKON_HOME=~/environments
-mkdir -p WORKON_HOME
+mkdir -p $WORKON_HOME
 file="postactivate"
 if [ -e $file ]
 then
