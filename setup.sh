@@ -1,4 +1,4 @@
-#!/bin/bash
+B0;95;c#!/bin/bash
 ############################
 # setup.sh
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc emacs emacs.d gitconfig gitignore_global zshrc oh-my-zsh"    # list of files/folders to symlink in homedir
+files="bashrc config emacs emacs.d gitconfig gitignore_global zshrc oh-my-zsh"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -35,7 +35,7 @@ for file in $files; do
 done
 
 echo "Installing Elpy"
-sudo pip install elpy rope
+sudo pip install elpy jedi
 
 echo "Installing Virtualenvwrapper"
 sudo pip install virtualenvwrapper
@@ -59,4 +59,4 @@ echo "Setting up CHEF_PATH"
 mkdir -p $CHEF_PATH
 
 echo "Source ~/.zshrc"
-source ~/.zshrc
+. ~/.zshrc
