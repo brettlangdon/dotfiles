@@ -4,7 +4,7 @@
 
 ;; Author: Jorgen Schaefer <contact@jorgenschaefer.de>
 ;; URL: https://github.com/jorgenschaefer/elpy
-;; Version: 1.2.0
+;; Version: 1.2.1
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License
@@ -104,7 +104,7 @@ These are prepended to `grep-find-ignored-directories'."
   "Hook run when `elpy-mode' is enabled."
   :group 'elpy)
 
-(defconst elpy-version "1.2.0"
+(defconst elpy-version "1.2.1"
   "The version of the Elpy lisp code.")
 
 (defun elpy-version ()
@@ -393,7 +393,7 @@ This should be run from `python-mode-hook'."
         (set (make-local-variable 'flymake-warning-predicate) "^W[0-9]")
       (set (make-local-variable 'flymake-warning-re) "^W[0-9]"))))
 
-(defvar elpy-project-root 'not-initialized
+(defvar elpy-project-root nil
   "The root of the project the current buffer is in.")
 (make-variable-buffer-local 'elpy-project-root)
 (put 'elpy-project-root 'safe-local-variable 'file-directory-p)
@@ -403,28 +403,27 @@ This should be run from `python-mode-hook'."
 
 You can set the variable `elpy-project-root' in, for example,
 .dir-locals.el to configure this."
-  (when (eq elpy-project-root 'not-initialized)
-    (setq elpy-project-root (elpy-project--find-root)))
+  (when (not elpy-project-root)
+    (setq elpy-project-root (elpy-project--find-root))
+    (when (equal (directory-file-name (expand-file-name default-directory))
+                 (directory-file-name (expand-file-name "~")))
+      (display-warning 'elpy
+                       (concat "Project root set to your home directory; "
+                               "this can slow down operation considerably")
+                       :warning)))
   elpy-project-root)
 
-(defun elpy-project--find-root (&optional skip-current-directory)
+(defun elpy-project--find-root ()
   "Find the first directory in the tree not containing an __init__.py
 
 If there is no __init__.py in the current directory, return the
-current directory unless SKIP-CURRENT-DIRECTORY is non-nil."
-  (cond
-   ((file-exists-p (format "%s/__init__.py" default-directory))
-    (locate-dominating-file default-directory
-                            (lambda (dir)
-                              (not (file-exists-p
-                                    (format "%s/__init__.py" dir))))))
-   ;; Don't return the user's home. That's never a good project root.
-   ((and (not skip-current-directory)
-         (not (equal (directory-file-name (expand-file-name default-directory))
-                     (directory-file-name (expand-file-name "~")))))
-    default-directory)
-   (t
-    nil)))
+current directory."
+  (if (file-exists-p (format "%s/__init__.py" default-directory))
+      (locate-dominating-file default-directory
+                              (lambda (dir)
+                                (not (file-exists-p
+                                      (format "%s/__init__.py" dir)))))
+    default-directory))
 
 (defun elpy-set-project-root (new-root)
   "Set the Elpy project root to NEW-ROOT."
@@ -992,6 +991,11 @@ creating one if necessary."
                               elpy-rpc-python-command)))
     elpy-rpc--buffer)))
 
+(defun elpy-rpc--get-rpc-process ()
+  "Return the RPC process associated with the current buffer,
+creating one if necessary."
+  (get-buffer-process (elpy-rpc--get-rpc-buffer)))
+
 (defun elpy-rpc--find-buffer (project-root python-command)
   "Return an existing RPC buffer for this project root and command."
   (let ((result nil))
@@ -1226,7 +1230,8 @@ Returns the result, blocking until this arrived."
                                end-time)
                   (not (or result-arrived
                            error-occured)))
-        (accept-process-output nil elpy-rpc--timeout 10)))
+        (accept-process-output (elpy-rpc--get-rpc-process)
+                               elpy-rpc--timeout)))
     (cond
      (error-occured
       (error error-string))
@@ -1412,13 +1417,6 @@ description."
     (message "%s" text)))
 
 
-;;;;;;;;
-;;; nose
-
-(eval-after-load "nose"
-  '(defalias 'nose-find-project-root 'elpy-project--find-root))
-
-
 ;;;;;;;;;;;;;
 ;;; Yasnippet
 
@@ -1530,6 +1528,14 @@ This uses `elpy--ac-cache'."
   (defun python-shell-parse-command ()
     "Compatibility function for older Emacsen."
     python-python-command))
+(when (not (fboundp 'python-shell-calculate-process-environment))
+  (defun python-shell-calculate-process-environment ()
+    "Compatibility function for older Emacsen."
+    process-environment))
+(when (not (fboundp 'python-shell-calculate-exec-path))
+  (defun python-shell-calculate-exec-path ()
+    "Compatibility function for older Emacsen."
+    exec-path))
 
 ;; Emacs 24.2 made `locate-dominating-file' accept a predicate instead
 ;; of a string. Simply overwrite the current one, it's
