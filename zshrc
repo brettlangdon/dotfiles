@@ -19,3 +19,4 @@ unsetopt share_history # share command history data
 alias cr="codereivew"
 alias crr="codereview --reviewers"
 alias cri="codereview --issue"
+alias vagrant_restart="sudo /Library/StartupItems/VirtualBox/VirtualBox restart"
