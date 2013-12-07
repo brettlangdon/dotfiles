@@ -62,6 +62,8 @@
 ; to force json-mode for .json files
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+
 ;solarize ALL the things
 (color-theme-initialize)
 (color-theme-clarity)
