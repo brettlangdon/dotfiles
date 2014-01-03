@@ -51,13 +51,6 @@
 (setq projectile-enable-caching t)
 (projectile-global-mode t)
 
-(elpy-enable)
-
-;call gofmt on the script when saving
-(add-hook 'go-mode-hook
-	  '(lambda ()
-	     (add-hook 'before-save-hook 'gofmt)))
-
 ;js-mode overwrites json-mode when loading .json files, so this is
 ; to force json-mode for .json files
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
@@ -69,16 +62,3 @@
 (color-theme-clarity)
 (require 'powerline)
 (powerline-default-theme)
-
-; http://blog.lathi.net/articles/2007/11/07/sharing-the-mac-clipboard-with-emacs
-(defun copy-from-osx ()
-  (shell-command-to-string "pbpaste"))
-
-(defun paste-to-osx (text &optional push)
-  (let ((process-connection-type nil))
-    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-      (process-send-string proc text)
-      (process-send-eof proc))))
-
-(setq interprogram-cut-function 'paste-to-osx)
-(setq interprogram-paste-function 'copy-from-osx)

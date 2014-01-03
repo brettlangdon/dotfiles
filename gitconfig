@@ -2,7 +2,7 @@
 	name = brettlangdon
 	email = brett@blangdon.com
 [credential]
-	helper = osxkeychain
+	helper = store
 [core]
 	excludesfile = /Users/brettlangdon/.gitignore_global
 	editor = emacs

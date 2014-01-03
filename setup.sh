@@ -34,29 +34,5 @@ for file in $files; do
     fi
 done
 
-echo "Installing Elpy"
-sudo pip install elpy jedi
-
-echo "Installing Virtualenvwrapper"
-sudo pip install virtualenvwrapper
-
-echo "Setting up $WORKON_HOME"
-WORKON_HOME=~/environments
-mkdir -p $WORKON_HOME
-file="postactivate"
-if [ -e $file ]
-then
-    echo "Moving $WORKON_HOME/$file to $olddir/$file"
-    mv $WORKON_HOME/$file $olddir
-    echo "Creating symlink to $file in $WORKON_HOME directory."
-    ln -s $dir/$file $WORKON_HOME/$file
-fi
-
-echo "Setting up GOPATH"
-mkdir -p $GOPATH
-
-echo "Setting up CHEF_PATH"
-mkdir -p $CHEF_PATH
-
 echo "Source ~/.zshrc"
 . ~/.zshrc
