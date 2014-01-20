@@ -6,7 +6,8 @@ plugins=(git pip python node npm)
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=$PATH:/usr/local/go/bin
 export NODE_PATH=/usr/local/lib/node_modules
 unsetopt inc_append_history
 unsetopt share_history # share command history data
