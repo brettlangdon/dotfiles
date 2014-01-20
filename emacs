@@ -30,6 +30,10 @@
 
 ;dont use tabs!
 (setq-default indent-tabs-mode nil)
+(setq-default c-basic-offset 4
+              tab-width 4
+              indent-tabs-mode nil)
+
 
 ;auto-indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
