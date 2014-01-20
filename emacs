@@ -60,6 +60,9 @@
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+(add-to-list 'magic-mode-alist '(".*env.*node" . js-mode) )
+
+(add-hook 'php-mode-hook 'eldoc-mode)
 
 ;solarize ALL the things
 (color-theme-initialize)
