@@ -43,6 +43,9 @@
 			 ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
+(require 'centered-cursor-mode)
+(global-centered-cursor-mode +1)
+
 (require 'flymake-cursor)
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 
