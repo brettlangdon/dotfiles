@@ -61,6 +61,8 @@
 (setq projectile-enable-caching t)
 (projectile-global-mode t)
 
+(defun flymake-xml-init ())
+
 ;js-mode overwrites json-mode when loading .json files, so this is
 ; to force json-mode for .json files
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
