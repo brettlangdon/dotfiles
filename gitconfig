@@ -12,3 +12,5 @@
 	dc = diff --color --minimal --cached
 [diff]
 	algorithm = patience
+[push]
+	default = simple
