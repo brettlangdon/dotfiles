@@ -1,5 +1,4 @@
 ; load all the other good things
-(add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d/powerline-2.2")
 (add-to-list 'load-path "~/.emacs.d/elpa/projectile-0.9.2")
 
@@ -33,7 +32,7 @@
 (setq-default c-basic-offset 4
               tab-width 4
               indent-tabs-mode nil)
-
+(load "~/.emacs.d/editorconfig")
 
 ;auto-indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
