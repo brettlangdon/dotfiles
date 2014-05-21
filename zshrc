@@ -6,6 +6,7 @@ plugins=(git pip python node npm)
 
 source $ZSH/oh-my-zsh.sh
 
+export EDITOR=emacs
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export NODE_PATH=/usr/local/lib/node_modules
