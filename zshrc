@@ -7,8 +7,10 @@ plugins=(git pip python node npm)
 source $ZSH/oh-my-zsh.sh
 
 export EDITOR=emacs
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
-export PATH=$PATH:/usr/local/go/bin
+
+export GOPATH=~/go
+PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:~/.arcanist/arcanist/bin
 export NODE_PATH=/usr/local/lib/node_modules
 unsetopt inc_append_history
 unsetopt share_history # share command history data
