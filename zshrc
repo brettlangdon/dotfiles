@@ -15,3 +15,6 @@ export NODE_PATH=/usr/local/lib/node_modules
 unsetopt inc_append_history
 unsetopt share_history # share command history data
 alias irc="screen -r irssi || screen -dmS irssi irssi && screen -r irssi"
+
+export WORKON_HOME=~/.env
+source /usr/local/bin/virtualenvwrapper.sh
