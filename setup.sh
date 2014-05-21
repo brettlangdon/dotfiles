@@ -34,5 +34,11 @@ for file in $files; do
     fi
 done
 
+echo "Setting up virtualenvwrapper"
+echo "Creating ~/.env"
+mkdir -p ~/.env
+echo "Moving postactivate into place"
+ln -s $dir/postactivate ~/.env/postactivate
+
 echo "Source ~/.zshrc"
 . ~/.zshrc
