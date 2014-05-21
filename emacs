@@ -50,7 +50,8 @@
 (add-hook 'js-mode-hook 'flymake-mode)
 
 (require 'projectile)
-(setq projectile-completion-system 'grizzl)
+;(setq projectile-completion-system 'grizzl)
+(setq projectile-completion-system 'ido)
 (setq projectile-enable-caching t)
 (projectile-global-mode t)
 
