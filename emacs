@@ -52,6 +52,9 @@
 (require 'flymake-jshint)
 (add-hook 'js-mode-hook 'flymake-mode)
 
+(add-hook 'java-mode-hook 'flymake-mode-off)
+(add-hook 'c-mode-hook 'flymake-mode-off)
+
 (require 'projectile)
 ;(setq projectile-completion-system 'grizzl)
 (setq projectile-completion-system 'ido)
