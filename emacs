@@ -53,6 +53,15 @@
 (require 'flymake-jshint)
 (add-hook 'js-mode-hook 'flymake-mode)
 
+;; (load "~/.emacs.d/jsfmt")
+;; (add-hook 'js-mode-hook (lambda()
+;;                           (add-hook 'before-save-hook 'jsfmt-before-save)))
+
+
+;; (setq flymake-phpcs-command "~/.emacs.d/elpa/flymake-phpcs-1.0.5/bin/flymake_phpcs")
+;; (setq flymake-phpcs-show-rule t)
+;; (require 'flymake-phpcs)
+
 (add-hook 'java-mode-hook 'flymake-mode-off)
 (add-hook 'c-mode-hook 'flymake-mode-off)
 
@@ -69,12 +78,11 @@
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-(add-to-list 'magic-mode-alist '(".*env.*node" . js-mode) )
+(add-to-list 'magic-mode-alist '(".*env.*node" . js-mode))
 
 (add-hook 'php-mode-hook 'eldoc-mode)
 
-;solarize ALL the things
 (color-theme-initialize)
-(color-theme-clarity)
+(color-theme-monokai)
 (require 'powerline)
 (powerline-default-theme)
