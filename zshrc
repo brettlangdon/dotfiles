@@ -7,8 +7,8 @@ plugins=(git pip python node npm tmux)
 
 source $ZSH/oh-my-zsh.sh
 
-PATH=/usr/local/bin:/usr/local/sbin:$PATH:~/Library/Python/2.7/bin/
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:~/.arcanist/arcanist/bin
+PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:~/.arcanist/arcanist/bin:~/.local/bin
 export NODE_PATH=/usr/local/lib/node_modules
 export GOPATH=~/go
 export WORKON_HOME=~/.env
