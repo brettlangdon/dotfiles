@@ -7,12 +7,13 @@ plugins=(git pip python node npm tmux)
 
 source $ZSH/oh-my-zsh.sh
 
-export EDITOR=emacs
-
-export GOPATH=~/go
-PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:$PATH:~/Library/Python/2.7/bin/
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:~/.arcanist/arcanist/bin
 export NODE_PATH=/usr/local/lib/node_modules
+export GOPATH=~/go
+export WORKON_HOME=~/.env
+export EDITOR=emacs
+source /usr/local/bin/virtualenvwrapper.sh
 unsetopt inc_append_history
 unsetopt share_history # share command history data
 alias irc="screen -r irssi || screen -dmS irssi irssi && screen -r irssi"
