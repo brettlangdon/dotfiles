@@ -20,6 +20,7 @@
 ;enable line numbers
 (global-linum-mode 1)
 (custom-set-variables '(linum-format (quote "%3d |")))
+(set-face-attribute 'linum nil :background "#000" :foreground "#FFF")
 
 ;remove trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
