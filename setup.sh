@@ -40,5 +40,8 @@ mkdir -p ~/.env
 echo "Moving postactivate into place"
 ln -s $dir/postactivate ~/.env/postactivate
 
+echo "Linking custom oh-my-zsh theme"
+ln -s $dir/themes ~/.oh-my-zsh/custom/themes
+
 echo "Source ~/.zshrc"
 . ~/.zshrc
