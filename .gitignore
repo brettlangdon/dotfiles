@@ -1,5 +1,6 @@
 *.cache
 *.dat
+*.elc
 *projectile-bookmarks.eld
 emacs.d/elpa/archives
 emacs.d/auto-save-list
