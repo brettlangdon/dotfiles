@@ -1,8 +1,9 @@
+export TERM="xterm-256color"
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="bira"
+ZSH_THEME="agnoster"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(git pip python node npm)
+plugins=(git pip python node npm tmux)
 
 source $ZSH/oh-my-zsh.sh
 
