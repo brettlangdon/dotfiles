@@ -6,3 +6,7 @@ emacs.d/elpa/archives
 emacs.d/auto-save-list
 emacs.d/geben
 emacs.d/tramp
+emacs.d/recentf
+config/keybase/
+config/netfabb/
+config/pudb/
