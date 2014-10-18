@@ -1,15 +1,13 @@
-B0;95;c#!/bin/bash
+#!/bin/bash
 ############################
 # setup.sh
 # This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
 ############################
 
 ########## Variables
-
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 files="bashrc config emacs emacs.d gitconfig gitignore_global zshrc oh-my-zsh"    # list of files/folders to symlink in homedir
-
 ##########
 
 # create dotfiles_old in homedir
