@@ -58,8 +58,6 @@
                            (set-face-attribute 'web-mode-html-tag-bracket-face nil :foreground "white")))
 (add-hook 'php-mode-hook (lambda()
                            (auto-complete-mode)
-                           (require 'auto-complete-exuberant-ctags)
-                           (ac-exuberant-ctags-setup)
                            (flymake-php-mode)))
 (add-hook 'markdown-mode-hook (lambda()
                                 (require 'poly-markdown)
