@@ -1,88 +1,74 @@
-; load all the other good things
-(add-to-list 'load-path "~/.emacs.d/powerline-2.2")
-(add-to-list 'load-path "~/.emacs.d/elpa/projectile-0.9.2")
+;; -*- mode: lisp; -*-
+(prefer-coding-system 'utf-8)
+(menu-bar-mode 0)
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
+(setq vc-follow-symlinks t)
 
-;disable backup
-(setq backup-inhibited t)
-;disable auto save
-(setq auto-save-default nil)
-
-;disable abbrev-mode
-(setq default-abbrev-mode nil)
-
-;final newline
-(setq require-final-newline t)
-(setq mode-require-final-newline t)
-
-;highlight current line
-(global-hl-line-mode 1)
-(set-face-background hl-line-face "gray13")
-;enable line numbers
-(global-linum-mode 1)
-(custom-set-variables '(linum-format (quote "%3d |")))
-(set-face-attribute 'linum nil :background "#000" :foreground "#FFF")
-
-;remove trailing whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;disable vc-git (dont use it and too slow to start up)
-(setq vc-handled-backends nil)
-
-;dont use tabs!
-(setq-default indent-tabs-mode nil)
-(setq-default c-basic-offset 4
-              tab-width 4
-              indent-tabs-mode nil)
-(load "~/.emacs.d/editorconfig")
-
-;auto-indent
-(define-key global-map (kbd "RET") 'newline-and-indent)
-
-;enable package manager
-(require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")))
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
-
-(require 'centered-cursor-mode)
-(global-centered-cursor-mode +1)
-
-(require 'flymake-cursor)
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-
-(require 'flymake-jshint)
-(add-hook 'js-mode-hook 'flymake-mode)
-
-;; (load "~/.emacs.d/jsfmt")
-;; (add-hook 'js-mode-hook (lambda()
-;;                           (add-hook 'before-save-hook 'jsfmt-before-save)))
-
-
-;; (setq flymake-phpcs-command "~/.emacs.d/elpa/flymake-phpcs-1.0.5/bin/flymake_phpcs")
-;; (setq flymake-phpcs-show-rule t)
-;; (require 'flymake-phpcs)
-
-(add-hook 'java-mode-hook 'flymake-mode-off)
-(add-hook 'c-mode-hook 'flymake-mode-off)
-
-(require 'projectile)
-;(setq projectile-completion-system 'grizzl)
-(setq projectile-completion-system 'ido)
-(setq projectile-enable-caching t)
-(projectile-global-mode t)
-
-(defun flymake-xml-init ())
-
-;js-mode overwrites json-mode when loading .json files, so this is
-; to force json-mode for .json files
-(add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
-
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-(add-to-list 'magic-mode-alist '(".*env.*node" . js-mode))
-
-(add-hook 'php-mode-hook 'eldoc-mode)
 
 (color-theme-initialize)
 (color-theme-monokai)
-(require 'powerline)
+
+(setq backup-inhibited t)
+(setq auto-save-default nil)
+(setq require-final-newline t)
+(setq mode-require-final-newline t)
+(define-key global-map (kbd "RET") 'newline-and-indent)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq-default indent-tabs-mode nil)
+
+(global-hl-line-mode 1)
+(set-face-background hl-line-face "#333")
+(global-linum-mode 1)
+(setq linum-format "%4d |")
+(set-face-attribute 'linum nil :background "#000" :foreground "#FFF")
+(global-git-gutter-mode 1)
+
+(setq mouse-wheel-mode 0)
+(setq mouse-wheel-up-event 0)
+(setq mouse-wheel-down-event 0)
+(require 'centered-cursor-mode)
+(global-centered-cursor-mode +1)
+
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode 1)
+(setq fci-rule-column 100)
+(setq fci-rule-width 1)
+(setq fci-rule-color "yellow")
+
 (powerline-default-theme)
+(display-time-mode 1)
+(display-battery-mode 1)
+
+(global-set-key (kbd "C-c a") 'org-agenda)
+(helm-mode 1)
+(projectile-global-mode 1)
+(global-subword-mode 1)
+(add-hook 'find-file-hook (lambda()
+                            (flymake-find-file-hook)
+                            (flymake-cursor-mode)))
+
+(add-hook 'web-mode-hook (lambda()
+                           (auto-complete-mode)
+                           (setq web-mode-markup-indent-offset 2)
+                           (set-face-attribute 'web-mode-html-tag-bracket-face nil :foreground "white")))
+(add-hook 'php-mode-hook (lambda()
+                           (auto-complete-mode)
+                           (flymake-php-mode)))
+(add-hook 'markdown-mode-hook (lambda()
+                                (require 'poly-markdown)
+                                (poly-markdown-mode 1)))
+(add-hook 'python-mode-hook (lambda()
+                              (auto-complete-mode)
+                              (elpy-mode)
+                              (highlight-indentation-mode 0)))
+
+
+(add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
+(add-to-list 'auto-mode-alist '("\\tpl.*.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\tag.*.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
