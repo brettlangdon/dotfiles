@@ -3,7 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="agnoster"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(git pip python node npm tmux)
+plugins=(git pip python node npm tmux knife)
 
 source $ZSH/oh-my-zsh.sh
 
