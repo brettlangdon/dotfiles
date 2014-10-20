@@ -64,8 +64,9 @@
                                 (flyspell-mode 1)
                                 (setq fci-rule-column 80)))
 (add-hook 'python-mode-hook (lambda()
-                              (auto-complete-mode)
                               (elpy-mode)
+                              (elpy-enable)
+                              (setq elpy-rpc-backend "jedi")
                               (highlight-indentation-mode 0)))
 
 
