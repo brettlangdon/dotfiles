@@ -40,6 +40,8 @@
 (setq fci-rule-width 1)
 (setq fci-rule-color "yellow")
 
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
 (display-time-mode 1)
 (display-battery-mode 1)
 
