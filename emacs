@@ -40,7 +40,6 @@
 (setq fci-rule-width 1)
 (setq fci-rule-color "yellow")
 
-(powerline-default-theme)
 (display-time-mode 1)
 (display-battery-mode 1)
 
