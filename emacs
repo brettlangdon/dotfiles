@@ -64,6 +64,8 @@
                                 (require 'poly-markdown)
                                 (poly-markdown-mode 1)
                                 (flyspell-mode 1)
+                                (setq fill-column 80)
+                                (auto-fill-mode)
                                 (setq fci-rule-column 80)))
 (add-hook 'python-mode-hook (lambda()
                               (elpy-mode)
