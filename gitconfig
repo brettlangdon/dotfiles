@@ -10,7 +10,12 @@
 	st = status
 	d = diff --color --minimal
 	dc = diff --color --minimal --cached
+	g = grep -p
+	dm = diff origin/master
+	sm = sqwish origin/master
 [diff]
 	algorithm = patience
 [push]
 	default = simple
+[grep]
+	lineNumber = true
