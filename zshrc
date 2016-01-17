@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/opt/go/libexec/bin:~/.local/bin"
+
 export TERM="xterm-256color"
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="agnoster"
@@ -12,10 +15,13 @@ unsetopt inc_append_history
 unsetopt share_history # share command history data
 
 export GOPATH=~/go
-PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
-export PATH=$PATH:$GOPATH/bin:/usr/local/opt/go/libexec/bin:~/.arcanist/arcanist/bin:~/.local/bin:~/.composer/vendor/bin
+export PATH="$PATH:$GOPATH/bin"
+export GO15VENDOREXPERIMENT="1"
+
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export NODE_PATH=/usr/local/lib/node_modules
 export EDITOR=emacs
+export ACK_PAGER_COLOR="less -x4SRFX"
 
 export WORKON_HOME=~/.env
 source /usr/local/bin/virtualenvwrapper.sh
