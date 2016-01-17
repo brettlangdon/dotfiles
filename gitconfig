@@ -13,6 +13,8 @@
 	g = grep -p
 	dm = diff origin/master
 	sm = sqwish origin/master
+        sba = "!f() { git subtree add --prefix $2 $1 $3 --squash; }; f"
+        sbu = "!f() { git subtree pull --prefix $2 $1 $3 --squash; }; f"
 [diff]
 	algorithm = patience
 [push]
