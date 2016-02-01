@@ -49,6 +49,7 @@
 
 (helm-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
 (projectile-global-mode 1)
 (global-set-key (kbd "C-c p s a") 'helm-projectile-ack)
 (global-subword-mode 1)
