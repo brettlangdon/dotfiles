@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        helm-M-x
         ))
 
 (setq mc/cmds-to-run-once
