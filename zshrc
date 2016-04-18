@@ -44,7 +44,7 @@ export rvm_project_rvmrc=1
 test -e ${HOME}/.rvm/scripts/rvm && source ${HOME}/.rvm/scripts/rvm
 
 # Check if dinghy is installed, and run shellinit if it exists
-which dinghy 2>1 >/dev/null && eval $(dinghy shellinit)
+which dinghy 2>&1 >/dev/null && eval $(dinghy shellinit)
 
 # Setup NVM
 export NVM_DIR=~/.nvm
