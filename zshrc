@@ -21,7 +21,7 @@ export GO15VENDOREXPERIMENT="1"
 
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export NODE_PATH=/usr/local/lib/node_modules
-export EDITOR=emacs
+export EDITOR=vim
 export ACK_PAGER_COLOR="less -x4SRFX"
 
 # Setup Python/Virtualenv
