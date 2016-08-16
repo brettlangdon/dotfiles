@@ -8,7 +8,7 @@ ZSH=${HOME}/.oh-my-zsh
 ZSH_THEME="agnoster"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(brew git git-extras pip python node npm nvm)
+plugins=(brew git git-extras pip python node npm nvm fabric)
 
 test -e ${ZSH}/oh-my-zsh.sh && source ${ZSH}/oh-my-zsh.sh
 unsetopt inc_append_history
@@ -17,7 +17,6 @@ unsetopt share_history # share command history data
 # Setup Go
 export GOPATH=~/go
 export PATH="$PATH:$GOPATH/bin"
-export GO15VENDOREXPERIMENT="1"
 
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export NODE_PATH=/usr/local/lib/node_modules
