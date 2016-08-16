@@ -1,11 +1,13 @@
 [user]
 	name = brettlangdon
 	email = brett@blangdon.com
+	signingkey = CE12147F
 [credential]
 	helper = store
 [core]
 	excludesfile = /Users/brettlangdon/.gitignore_global
 	editor = emacs
+	pager = diff-so-fancy | less --tabs=1,5 -R
 [alias]
 	st = status
 	d = diff --color --minimal
@@ -21,3 +23,5 @@
 	default = simple
 [grep]
 	lineNumber = true
+[commit]
+	gpgsign = true
