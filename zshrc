@@ -42,9 +42,6 @@ export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
 export rvm_project_rvmrc=1
 test -e ${HOME}/.rvm/scripts/rvm && source ${HOME}/.rvm/scripts/rvm
 
-# Check if dinghy is installed, and run shellinit if it exists
-which dinghy 2>&1 >/dev/null && eval $(dinghy shellinit)
-
 # Setup NVM
 export NVM_DIR=~/.nvm
 test -e $(brew --prefix nvm)/nvm.sh && source $(brew --prefix nvm)/nvm.sh
