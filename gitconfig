@@ -1,27 +1,27 @@
 [user]
-	name = brettlangdon
-	email = brett@blangdon.com
-	signingkey = CE12147F
+        name = brettlangdon
+        email = brett@blangdon.com
+        signingkey = CE12147F
 [credential]
-	helper = store
+        helper = store
 [core]
-	excludesfile = /Users/brettlangdon/.gitignore_global
-	editor = emacs
-	pager = diff-so-fancy | less --tabs=1,5 -R
+        excludesfile = /Users/brettlangdon/.gitignore_global
+        editor = emacs
+        pager = diff-so-fancy | less --tabs=4 -RFX
+        whitespace = trailing-space,space-before-tab
 [alias]
-	st = status
-	d = diff --color --minimal
-	dc = diff --color --minimal --cached
-	g = grep -p
-	dm = diff origin/master
-	sm = sqwish origin/master
-        sba = "!f() { git subtree add --prefix $2 $1 $3 --squash; }; f"
-        sbu = "!f() { git subtree pull --prefix $2 $1 $3 --squash; }; f"
+        st = status
+        d = diff --color --minimal
+        dc = diff --color --minimal --cached
+        g = grep -p
+        dm = diff origin/master
+        sm = sqwish origin/master
 [diff]
-	algorithm = patience
+        compactionHeuristic = true
+        algorithm = histogram
 [push]
-	default = simple
+        default = simple
 [grep]
-	lineNumber = true
+        lineNumber = true
 [commit]
-	gpgsign = true
+        gpgsign = true
