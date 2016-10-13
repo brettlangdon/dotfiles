@@ -55,3 +55,8 @@ chpwd
 
 # Setup iterm2 shell integration
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+# Init chef
+if hash chef 2>/dev/null; then
+    eval "$(chef shell-init zsh)"
+fi
