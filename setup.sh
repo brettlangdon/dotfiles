@@ -7,7 +7,7 @@
 ########## Variables
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc config emacs emacs.d gitconfig gitignore_global psqlrc zshrc oh-my-zsh"    # list of files/folders to symlink in homedir
+files="bashrc config emacs emacs.d gitconfig gitignore_global psqlrc zshrc oh-my-zsh tmux.conf"    # list of files/folders to symlink in homedir
 ##########
 
 # create dotfiles_old in homedir
