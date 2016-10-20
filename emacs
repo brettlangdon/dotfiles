@@ -12,6 +12,7 @@
                          ("elpy" . "http://jorgenschaefer.github.io/packages/")))
 (package-initialize)
 (osx-clipboard-mode +1)
+(xterm-mouse-mode)
 
 (load-theme 'monokai t)
 (require 'powerline)
