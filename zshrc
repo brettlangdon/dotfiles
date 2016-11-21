@@ -33,6 +33,7 @@ hash -d src=~/src
 # Setup custom aliases
 alias up="vagrant up && vagrant ssh"
 alias stayawake="caffeinate -s -d -i"
+alias emacs="emacs -nw"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
