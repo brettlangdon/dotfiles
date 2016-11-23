@@ -3,9 +3,9 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Configure emacs as default editor
-export GIT_EDITOR="emacs -nw"
-export VISUAL="emacs -nw"
-export EDITOR="emacs -nw"
+export GIT_EDITOR="emacs -nw -Q"
+export VISUAL="emacs"
+export EDITOR="emacs"
 
 PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/.local/bin"
