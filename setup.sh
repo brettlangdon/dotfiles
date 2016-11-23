@@ -7,7 +7,7 @@
 ########## Variables
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc config emacs emacs.d gitconfig gitignore_global psqlrc zshrc oh-my-zsh tmux.conf"    # list of files/folders to symlink in homedir
+files="bashrc config spacemacs emacs.d gitconfig gitignore_global psqlrc zshrc oh-my-zsh tmux.conf"    # list of files/folders to symlink in homedir
 ##########
 
 # create dotfiles_old in homedir
@@ -25,8 +25,8 @@ echo "Moving any existing dotfiles from ~ to $olddir"
 for file in $files; do
     if [ -e $file ]
     then
-	echo "Moving $file to $olddir/$file"
-	mv ~/.$file $olddir
+        echo "Moving $file to $olddir/$file"
+        mv ~/.$file $olddir
         echo "Creating symlink to $file in home directory."
         ln -s $dir/$file ~/.$file
     fi
@@ -37,9 +37,6 @@ echo "Creating ~/.env"
 mkdir -p ~/.env
 echo "Moving postactivate into place"
 ln -s $dir/postactivate ~/.env/postactivate
-
-echo "Linking custom oh-my-zsh theme"
-ln -s $dir/themes ~/.oh-my-zsh/custom/themes
 
 echo "Source ~/.zshrc"
 . ~/.zshrc
