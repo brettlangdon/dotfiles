@@ -286,7 +286,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup t
+   dotspacemacs-whitespace-cleanup 'all
    ))
 
 (defun dotspacemacs/user-init ()
@@ -321,6 +321,8 @@ you should place your code here."
   (setq fci-rule-width 1)
   (setq fci-rule-color "yellow")
   (yas-global-mode 0)
+  (ws-butler-global-mode 1)
+  (setq ws-butler-keep-whitespace-before-point 0)
   (global-column-enforce-mode 1)
   (setq column-enforce-column 120)
   (define-key evil-emacs-state-map (kbd "C-c p s s") 'helm-do-ag-project-root)
