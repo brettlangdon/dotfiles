@@ -6,7 +6,7 @@
         helper = store
 [core]
         excludesfile = /Users/brettlangdon/.gitignore_global
-        editor = emacs
+        editor = emacs -nw -Q
         pager = diff-so-fancy | less --tabs=4 -RFX
         whitespace = trailing-space,space-before-tab
 [alias]
