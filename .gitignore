@@ -8,9 +8,3 @@ config/inkscape
 config/keybase/
 config/netfabb/
 config/pudb/
-emacs.d/auto-save-list
-emacs.d/elpa/archives
-emacs.d/geben
-emacs.d/recentf
-emacs.d/tramp
-emacs.d/url
