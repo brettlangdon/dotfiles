@@ -38,8 +38,8 @@ PATH="/usr/local/heroku/bin:$PATH"
 export PATH="$HOME/.rvm/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-# TODO: Load in any extra environments
-for f in $(find $ZSH_DIR/ -print -type f -maxdepth 1 | grep '\.env\..*\.zsh' | sort)
+# Load in any additional .env files provided
+for f in $(find $ZSH_DIR/ -print -type f -maxdepth 1 -s | grep '\.env\..*\.zsh')
 do
     source "$f"
 done
