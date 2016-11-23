@@ -8,3 +8,4 @@ config/inkscape
 config/keybase/
 config/netfabb/
 config/pudb/
+zshrc.d/.env.*.zsh
