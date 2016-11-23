@@ -7,7 +7,7 @@
 ########## Variables
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="config spacemacs emacs.d gitconfig gitignore_global psqlrc zshenv zshrc oh-my-zsh"    # list of files/folders to symlink in homedir
+files="config spacemacs emacs.d gitconfig gitignore_global psqlrc zshrc.d zshrc"    # list of files/folders to symlink in homedir
 ##########
 
 # create dotfiles_old in homedir
