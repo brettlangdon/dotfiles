@@ -22,10 +22,27 @@ rvm () {
 }
 
 # Setup NVM
-nvm () {
+load_nvm () {
+    unset -f node npm yarn
     source $(brew --prefix nvm)/nvm.sh
+}
+nvm () {
+    load_nvm
     nvm "$@"
 }
+node () {
+    load_nvm
+    node "$@"
+}
+npm () {
+    load_nvm
+    npm "$@"
+}
+yarn () {
+    load_nvm
+    npm "$@"
+}
+
 
 # Init chef
 chef () {
