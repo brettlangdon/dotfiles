@@ -305,6 +305,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq backup-inhibited t)
   (setq vc-follow-symlinks t)
   (setq gofmt-command "goimports")
+  (setq js-indent-level 2)
   (prefer-coding-system 'utf-8)
   (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
   )
