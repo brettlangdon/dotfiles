@@ -49,3 +49,17 @@ chef () {
     eval "$(chef shell-init zsh)"
     chef "$@"
 }
+
+
+# Upgrade functions
+update_spacemacs () {
+    cd ~/dotfiles
+    git subtree pull --prefix emacs.d --squash --message "Upgrade spacemacs" https://github.com/syl20bnr/spacemacs master
+    popd
+}
+
+update_oh_my_zsh () {
+    cd ~/dotfiles
+    git subtree pull --prefix zshrc.d/oh-my-zsh --squash --message "Upgrade oh-my-zsh" https://github.com/robbyrussell/oh-my-zsh master
+    popd
+}
