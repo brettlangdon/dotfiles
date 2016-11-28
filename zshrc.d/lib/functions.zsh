@@ -40,7 +40,7 @@ npm () {
 }
 yarn () {
     load_nvm
-    npm "$@"
+    yarn "$@"
 }
 
 
