@@ -39,7 +39,7 @@ export PATH="$HOME/.rvm/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Load in any additional .env files provided
-for f in $(find $ZSH_DIR/ -print -type f -maxdepth 1 | grep '\.env\..*\.zsh' | sort)
+for f in $(find $ZSH_DIR/ -maxdepth 1 -print -type f | grep '\.env\..*\.zsh' | sort)
 do
     source "$f"
 done
