@@ -33,7 +33,7 @@ export NVM_DIR=~/.nvm
 # Configure Path
 PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/.local/bin"
-PATH="$PATH:$GOPATH/bin"
+PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 PATH="/usr/local/heroku/bin:$PATH"
 export PATH="$HOME/.rvm/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
