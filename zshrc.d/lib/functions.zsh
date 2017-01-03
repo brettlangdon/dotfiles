@@ -1,20 +1,3 @@
-# Setup Python/Virtualenv
-load_virtualenv () {
-    source /usr/local/bin/virtualenvwrapper.sh
-}
-workon () {
-    load_virtualenv
-    workon "$@"
-}
-mkvirtualenv () {
-    load_virtualenv
-    mkvirtualenv "$@"
-}
-rmvirtualenv () {
-    load_virtualenv
-    rmvirtualenv "$@"
-}
-
 # Setup RVM
 rvm () {
     source ${HOME}/.rvm/scripts/rvm
