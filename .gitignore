@@ -1,11 +1,5 @@
 *.cache
 *.dat
 *.elc
-*projectile-bookmarks.eld
-config/configstore
-config/gtk-2.0
-config/inkscape
-config/keybase/
-config/netfabb/
-config/pudb/
+config/
 zshrc.d/.env.*.zsh
