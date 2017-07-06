@@ -342,6 +342,8 @@ you should place your code here."
   (define-key evil-emacs-state-map (kbd "C-c p s s") 'helm-do-ag-project-root)
   )
 
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+
 (add-hook 'go-mode-hook
           (lambda()
             (setq company-tooltip-limit 20)
