@@ -16,6 +16,10 @@ export GOPATH=~/go
 export WORKON_HOME=~/.env
 export PYTHONDONTWRITEBYTECODE=1
 
+# Configure dotnet
+# DEV: Opt out of telemetry
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 # Configure ZSH
 export ZSH=$ZSH_DIR/oh-my-zsh
 export ZSH_THEME="agnoster"
@@ -35,6 +39,7 @@ PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/.local/bin"
 PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 PATH="/usr/local/heroku/bin:$PATH"
+PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="$HOME/.rvm/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
