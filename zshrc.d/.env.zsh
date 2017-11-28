@@ -34,6 +34,9 @@ export rvm_project_rvmrc=1
 # Configure NVM
 export NVM_DIR=~/.nvm
 
+# Configure GPG
+export GPG_TTY=$(tty)
+
 # Configure Path
 PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/.local/bin"
