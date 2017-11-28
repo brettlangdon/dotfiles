@@ -15,7 +15,6 @@
         dc = diff --color --minimal --cached
         g = grep -p
         dm = diff origin/master
-        sm = sqwish origin/master
 [diff]
         compactionHeuristic = true
         algorithm = histogram
