@@ -26,7 +26,7 @@ export ZSH_THEME="agnoster"
 export DISABLE_AUTO_UPDATE="true"
 export COMPLETION_WAITING_DOTS="true"
 # DEV: `pip` and `nvm` are very slow to load
-export plugins=(git git-extras python node npm fabric)
+export plugins=(git-extras python node npm fabric)
 
 # Configure RVM
 export rvm_project_rvmrc=1
