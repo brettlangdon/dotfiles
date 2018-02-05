@@ -5,6 +5,5 @@ source ${ZSH_DIR}/bootstrap.zsh
 unsetopt inc_append_history share_history
 setopt NO_BEEP histignorealldups
 
-
-# # Setup iterm2 shell integration
+# Setup iterm2 shell integration
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
