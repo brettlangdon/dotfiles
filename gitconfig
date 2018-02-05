@@ -1,7 +1,7 @@
 [user]
         name = brettlangdon
-        email = brett@blangdon.com
-        signingkey = CE12147F
+        email = me@brett.is
+        signingkey = B664881177781B04
 [credential]
         helper = store
 [core]
@@ -23,18 +23,20 @@
 [grep]
         lineNumber = true
 [commit]
-        gpgsign = true
+  gpgsign = true
 [color]
-	ui = true
+  ui = true
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 [color "diff"]
-	meta = 227
-	frag = magenta bold
-	commit = 227 bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+  meta = 227
+  frag = magenta bold
+  commit = 227 bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[gpg]
+	program = gpg
