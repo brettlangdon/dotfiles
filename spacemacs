@@ -349,6 +349,10 @@ you should place your code here."
           (lambda()
             (add-hook 'before-save-hook 'terraform-format-buffer)))
 
+(add-hook 'go-mode-hook
+          (lambda()
+            (local-set-key (kbd "M-.") 'godef-jump)))
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
