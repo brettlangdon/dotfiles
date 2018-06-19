@@ -4,10 +4,9 @@ export TERM="xterm-256color"
 export ACK_PAGER_COLOR="less -x4SRFX"
 
 # Configure emacs as default editor
-# Configure emacs as default editor
 export GIT_EDITOR="emacs -nw -Q"
-export VISUAL="emacs"
-export EDITOR="emacs"
+export VISUAL="emacs -nw -Q"
+export EDITOR="emacs -nw -Q"
 
 # Configure Go
 export GOPATH=~/go
