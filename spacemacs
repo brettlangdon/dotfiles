@@ -1,7 +1,35 @@
-;; -*- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+;; Startup optimizations
+
+;; Set garbage collection threshold
+;; https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
+(setq gc-cons-threshold-original gc-cons-threshold
+      gc-cons-percentage-original gc-cons-percentage)
+(setq gc-cons-threshold (* 1024 1024 100)
+      gc-cons-percentage 0.6)
+
+;; Set file-name-handler-alist
+;; https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
+(setq file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+;; Set deferred timer to reset them
+;; https://emacs.stackexchange.com/a/34367
+(run-with-idle-timer
+ 5 nil
+ (lambda ()
+   (setq gc-cons-threshold gc-cons-threshold-original)
+   (setq gc-cons-percentage gc-cons-percentage-original)
+   (setq file-name-handler-alist file-name-handler-alist-original)
+   (makunbound 'gc-cons-threshold-original)
+   (makunbound 'gc-cons-percentage-original)
+   (makunbound 'file-name-handler-alist-original)
+   (message "gc-cons-threshold and file-name-handler-alist restored")))
+
+;;; Spacemacs Configuration
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -53,7 +81,6 @@ values."
      spell-checking
      sql
      syntax-checking
-     terraform
      yaml
      )
    ;; List of additional packages that will be installed without being
@@ -64,13 +91,20 @@ values."
                                       groovy-mode
                                       monokai-theme
                                       jinja2-mode
+                                      ;; Profiling
+                                      ;; emacs --profile
+                                      ;; esup
                                       (vue-mode :location (recipe
                                                            :fetcher github
                                                            :repo "codefalling/vue-mode")))
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(exec-path-from-shell)
+   dotspacemacs-excluded-packages '(exec-path-from-shell
+                                    yasnippet
+                                    auto-yasnippet
+                                    helm-c-yasnippet
+                                    magit-popup)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -122,7 +156,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -270,7 +304,7 @@ values."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc…
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis nil
+   dotspacemacs-smart-closing-parenthesis t
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
@@ -330,24 +364,19 @@ you should place your code here."
   (setq fci-rule-width 1)
   (setq fci-rule-color "yellow")
   (yas-global-mode 0)
-  (ws-butler-global-mode 1)
+  (ws-butler-global-mode 0)
   (setq ws-butler-keep-whitespace-before-point 0)
   (global-column-enforce-mode 1)
   (setq column-enforce-column 120)
   (define-key evil-emacs-state-map (kbd "C-c p s s") 'helm-do-ag-project-root)
   )
 
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
 
 (add-hook 'web-mode-hook
           (lambda()
             (setq web-mode-markup-indent-offset 2)
             (setq web-mode-code-indent-offset 2)))
-
-(add-hook 'terraform-mode-hook
-          (lambda()
-            (add-hook 'before-save-hook 'terraform-format-buffer)))
 
 (add-hook 'go-mode-hook
           (lambda()
@@ -360,15 +389,12 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("f81a9aabc6a70441e4a742dfd6d10b2bae1088830dc7aba9c9922f4b1bd2ba50" default)))
  '(package-selected-packages
    (quote
-    (docker tablist magit-popup docker-tramp groovy-mode sql-indent edit-indirect ssass-mode vue-html-mode terraform-mode hcl-mode company-auctex auctex omnisharp shut-up csharp-mode csv-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode vue-mode winum fuzzy flycheck-gometalinter golint go-autocomplete flymake-go spacemacs-theme toml-mode racer flycheck-rust seq cargo rust-mode jinja2-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data nginx-mode yaml-mode dockerfile-mode web-beautify rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc go-guru go-eldoc company-tern dash-functional tern company-go go-mode coffee-mode chruby bundler inf-ruby company-quickhelp smeargle orgit org with-editor centered-cursor-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl zonokai-theme zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme pastels-on-dark-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme firebelly-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme helm-company helm-c-yasnippet flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete flycheck-pyflakes yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic mmm-mode markdown-toc markdown-mode gh-md ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build))))
+    (esup hydra flyspell-correct anaconda-mode tern iedit smartparens highlight evil goto-chg flycheck go-mode company projectile helm helm-core async avy markdown-mode edit-indirect ssass-mode vue-html-mode exec-path-from-shell define-word yapfify yaml-mode ws-butler winum which-key web-mode web-beautify vue-mode volatile-highlights vi-tilde-fringe uuidgen use-package toml-mode toc-org terraform-mode tagedit sql-indent spaceline slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs request rbenv rake rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pbcopy paradox osx-trash osx-dictionary org-plus-contrib org-bullets open-junk-file nginx-mode neotree move-text monokai-theme minitest markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl js2-refactor js-doc jinja2-mode indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-css-scss helm-company helm-ag groovy-mode google-translate golden-ratio go-guru go-eldoc gh-md fuzzy flyspell-correct-helm flycheck-rust flycheck-pos-tip flycheck-gometalinter flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav dumb-jump dockerfile-mode docker diminish cython-mode csv-mode company-web company-tern company-statistics company-quickhelp company-go company-anaconda column-enforce-mode coffee-mode clean-aindent-mode chruby centered-cursor-mode cargo bundler auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:background nil)))))
+ )
