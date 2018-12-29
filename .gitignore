@@ -3,3 +3,6 @@
 *.elc
 config/
 zshrc.d/.env.*.zsh
+emacs.d/elpa
+emacs.d/anaconda-mode
+emacs.d/*.eld
