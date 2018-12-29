@@ -163,8 +163,7 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists nil
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -340,12 +339,24 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq auto-save-default nil)
   (setq backup-inhibited t)
   (setq vc-follow-symlinks t)
+  (setq projectile-enable-caching t)
   (setq js-indent-level 2)
   (setq sh-basic-offset 2)
   (setq c-basic-offset 2)
   (setq gofmt-command "goimports")
   (prefer-coding-system 'utf-8)
   (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+
+  (add-hook 'web-mode-hook
+            (lambda()
+              (setq web-mode-markup-indent-offset 2)
+              (setq web-mode-code-indent-offset 2)))
+
+  (add-hook 'go-mode-hook
+            (lambda()
+              (local-set-key (kbd "M-.") 'godef-jump)))
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -363,25 +374,12 @@ you should place your code here."
   (setq fci-rule-column 100)
   (setq fci-rule-width 1)
   (setq fci-rule-color "yellow")
-  (yas-global-mode 0)
-  (ws-butler-global-mode 0)
+  (ws-butler-global-mode 1)
   (setq ws-butler-keep-whitespace-before-point 0)
   (global-column-enforce-mode 1)
   (setq column-enforce-column 120)
   (define-key evil-emacs-state-map (kbd "C-c p s s") 'helm-do-ag-project-root)
   )
-
-(add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
-
-(add-hook 'web-mode-hook
-          (lambda()
-            (setq web-mode-markup-indent-offset 2)
-            (setq web-mode-code-indent-offset 2)))
-
-(add-hook 'go-mode-hook
-          (lambda()
-            (local-set-key (kbd "M-.") 'godef-jump)))
-
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
