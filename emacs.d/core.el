@@ -39,9 +39,22 @@
 ;; Subword mode
 (global-subword-mode)
 
-;; Enable global line numbers
-(global-linum-mode t)
+;; Save place in file
+(save-place-mode 1)
 
+;; Save history
+(setq savehist-additional-variables '(mark-ring
+				      global-mark-ring
+				      search-ring
+				      regexp-search-ring
+				      extended-command-history)
+      savehist-autosave-interval 60
+      enable-recursive-minibuffers t
+      history-length 1000)
+(savehist-mode 1)
+
+;; smart tab behavior - indent or complete
+(setq tab-always-indent 'complete)
 
 ;; Custom functions
 ;; DEV: Load this last

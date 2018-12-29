@@ -13,6 +13,9 @@
   :diminish helm-mode
   :bind (("M-x" . helm-M-x)
 	 ("C-x C-f" . helm-find-files))
+  :init
+  (setq helm-move-to-line-cycle-in-source t
+	helm-M-x-always-save-history t)
   :config
   (use-package helm-ag)
   (helm-mode 1))
