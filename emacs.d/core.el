@@ -33,12 +33,6 @@
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
 
-;; Whitespace
-;; Newline at end of file
-(setq require-final-newline t)
-(add-hook 'before-save-hook 'whitespace-cleanup)
-(whitespace-mode)
-
 ;; Subword mode
 (global-subword-mode)
 

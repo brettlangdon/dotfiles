@@ -3,6 +3,8 @@
 (use-package anaconda-mode
   :hook python-mode
   :diminish anaconda-mode
+  :requires eldoc
+  :after eldoc
   :config
   (anaconda-mode)
   (anaconda-eldoc-mode))
@@ -18,7 +20,7 @@
 
 ;; Enable eldoc mode
 (use-package eldoc
-  :hook python-mode
+  :mode ("\\.py" . python-mode)
   :diminish eldoc-mode
   :config
   (eldoc-mode))
