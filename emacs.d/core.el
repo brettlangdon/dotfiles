@@ -5,7 +5,7 @@
 ;; Hide startup message
 (setq inhibit-startup-message t)
 
-;; Configure package and use-package
+;; Configure package
 (require 'package)
 
 (add-to-list 'package-archives
@@ -20,7 +20,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
+;; Configure use-package
+;; https://github.com/jwiegley/use-package
+(eval-when-compile
+  (require 'use-package))
 (setq use-package-always-ensure t)
 
 ;; Disable backup files and auto-saving

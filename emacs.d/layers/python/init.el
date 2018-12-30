@@ -1,22 +1,27 @@
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    ;; Anaconda mode
-	    ;; https://github.com/proofit404/anaconda-mode
-	    (use-package anaconda-mode
-	      :diminish anaconda-mode
-	      :config
-	      (anaconda-mode)
-	      (anaconda-eldoc-mode))
+;; Anaconda mode
+;; https://github.com/proofit404/anaconda-mode
+(use-package anaconda-mode
+  :hook python-mode
+  :diminish anaconda-mode
+  :config
+  (anaconda-mode)
+  (anaconda-eldoc-mode))
 
-	    ;; Company anaconda
-	    ;; https://github.com/proofit404/company-anaconda
-	    (use-package company-anaconda
-	      :init
-	      (eval-after-load "company"
-		'(add-to-list 'company-backends 'company-anaconda)))
-	    (use-package eldoc
-	      :diminish eldoc-mode
-	      :config
-	      (eldoc-mode))
+;; Company anaconda
+;; https://github.com/proofit404/company-anaconda
+(use-package company-anaconda
+  :hook python-mode
+  :after (company anaconda-mode)
+  :init
+  (eval-after-load "company"
+    '(add-to-list 'company-backends 'company-anaconda)))
 
-	    (enable-flycheck)))
+;; Enable eldoc mode
+(use-package eldoc
+  :hook python-mode
+  :diminish eldoc-mode
+  :config
+  (eldoc-mode))
+
+;; Enable Flycheck for python
+(enable-flycheck 'python-mode-hook)
