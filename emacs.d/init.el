@@ -219,4 +219,5 @@
 
 
 ;; -- Load layers --
-(mapc 'load (file-expand-wildcards (expand-file-name "layers/*/*.el" current-dir)))
+(eval-and-compile
+  (mapc 'load (file-expand-wildcards (expand-file-name "layers/*/*.el" current-dir))))
