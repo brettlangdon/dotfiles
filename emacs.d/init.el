@@ -30,8 +30,11 @@
 
 ;; -- Core setup --
 (progn
+  ;; Current directory name, probably "~/emacs.d"
+  (setq current-dir (file-name-directory load-file-name))
+
   ;; Configure customization
-  (setq custom-file "~/.emacs.d/custom.el")
+  (setq custom-file (expand-file-name "custom.el" current-dir))
   (load custom-file)
 
   ;; Hide startup message
@@ -74,6 +77,10 @@
 
   ;; Save place in file
   (save-place-mode 1)
+
+  ;; Enable both of these commands
+  (put 'downcase-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
 
   ;; Save history
   (setq savehist-additional-variables '(mark-ring
@@ -212,4 +219,4 @@
 
 
 ;; -- Load layers --
-(mapc 'load (file-expand-wildcards "~/.emacs.d/layers/*/*.el"))
+(mapc 'load (file-expand-wildcards (expand-file-name "layers/*/*.el" current-dir)))
