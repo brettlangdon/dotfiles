@@ -64,7 +64,8 @@
   (setq auto-save-default nil)
 
   ;; Spaces are better than tabs
-  (setq-default indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil
+                tab-width 2)
 
   ;; revert buffers automatically when underlying files are changed externally
   (global-auto-revert-mode t)
