@@ -9,3 +9,5 @@ emacs.d/*.eld
 emacs.d/history
 emacs.d/places
 emacs.d/recentf
+emacs.d/auto-save-list
+emacs.d/custom.el
