@@ -32,7 +32,7 @@
   ;; -- Core setup --
   (progn
     ;; Current directory name, probably "~/emacs.d"
-    (setq current-dir (file-name-directory load-file-name))
+    (setq current-dir (file-name-directory (if load-file-name load-file-name "~/.emacs.d/")))
 
     ;; Configure customization
     (setq custom-file (expand-file-name "custom.el" current-dir))
@@ -129,6 +129,7 @@
     ;; Enable center cursor
     (use-package centered-cursor-mode
       :load-path "vendor/"
+      :functions global-centered-cursor-mode
       :config
       (global-centered-cursor-mode))
 
@@ -151,6 +152,7 @@
 
     ;; Configure helm
     ;; https://emacs-helm.github.io/helm/
+    (setq personal-keybindings nil)
     (use-package helm-config
       :ensure helm
       :diminish helm-mode
@@ -168,9 +170,13 @@
     ;; https://www.projectile.mx/en/latest/
     (use-package projectile
       :delight '(:eval (concat " " (projectile-project-name)))
+      :functions (projectile-project-p
+                  projectile-project-root
+                  projectile-current-project-dirs
+                  projectile-file-cached-p)
       :config
       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-      (projectile-global-mode +1)
+      (projectile-mode +1)
       ;; Use helm-projectile
       :config
       (setq projectile-completion-system 'helm
