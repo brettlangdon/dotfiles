@@ -25,5 +25,12 @@
   :config
   (eldoc-mode))
 
+;; Enable pip-requirements when editing a `requirements.txt` file
+(use-package pip-requirements
+  :mode ("requirements\\.txt" . pip-requirements-mode)
+  :diminish pip-requirements-mode
+  :config
+  (pip-requirements-mode))
+
 ;; Enable Flycheck for python
 (enable-flycheck 'python-mode-hook)
