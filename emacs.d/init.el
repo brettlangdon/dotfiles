@@ -75,6 +75,9 @@
   ;; Subword mode
   (global-subword-mode)
 
+  ;; Use `newline-and-indent` when pressing enter
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+
   ;; Save place in file
   (save-place-mode 1)
 
