@@ -120,7 +120,7 @@
     (load-theme 'monokai t))
 
   ;; Enable global line numbers
-  (global-linum-mode t)
+  (global-display-line-numbers-mode t)
 
   ;; Hide menu bar
   (menu-bar-mode -1)
