@@ -1,25 +1,16 @@
-;; Anaconda mode
-;; https://github.com/proofit404/anaconda-mode
-(use-package anaconda-mode
-  :diminish anaconda-mode
+;; lsp-mode
+;; https://github.com/emacs-lsp/lsp-mode
+(use-package lsp-mode
+  :hook (python-mode . lsp)
+  :commands lsp)
+
+(use-package lsp-ui
   :ensure t
-  :config
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+  :hook (python-mode . lsp)
+  :commands lsp-ui-mode)
 
-;; Company anaconda
-;; https://github.com/proofit404/company-anaconda
-(use-package company-anaconda
-  :mode ("\\.py" . python-mode)
-  :after (company anaconda-mode)
-  :config
-  (add-to-list 'company-backends 'company-anaconda))
-
-;; Enable eldoc mode
-(use-package eldoc
-  :diminish eldoc-mode
-  :config
-  (add-hook 'python-mode 'eldoc-mode))
+(use-package company-lsp
+  :hook (python-mode . lsp))
 
 ;; Enable pip-requirements when editing a `requirements.txt` file
 (use-package pip-requirements
