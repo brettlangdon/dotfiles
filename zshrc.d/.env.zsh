@@ -50,6 +50,7 @@ PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/.local/bin"
 PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 PATH="/usr/local/heroku/bin:$PATH"
 PATH="/usr/local/opt/python/libexec/bin:$PATH"
+PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.rvm/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 

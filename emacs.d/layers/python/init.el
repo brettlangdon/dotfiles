@@ -17,5 +17,14 @@
   :mode ("requirements\\.txt" . pip-requirements-mode)
   :diminish pip-requirements-mode)
 
+;; Enable cython-mode when editing a `*.pyx` file
+(use-package cython-mode
+  :mode ("\\.pyx" . cython-mode)
+  :diminish cython-mode)
+
+(use-package sphinx-doc
+  :hook (python-mode . sphinx-doc-mode)
+  :commands sphinx-docs-mode)
+
 ;; Enable Flycheck for python
 (enable-flycheck 'python-mode-hook)

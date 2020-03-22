@@ -11,3 +11,4 @@ emacs.d/places
 emacs.d/recentf
 emacs.d/auto-save-list
 emacs.d/custom.el
+emacs.d/.lsp-session*

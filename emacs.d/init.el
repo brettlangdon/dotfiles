@@ -62,8 +62,10 @@
   (setq use-package-always-ensure t)
 
   ;; Disable backup files and auto-saving
-  (setq backup-inhibited t)
-  (setq auto-save-default nil)
+  (setq backup-inhibited t
+        make-backup-files nil
+        auto-save-default nil
+        auto-save-list-file-prefix nil)
 
   ;; Spaces are better than tabs
   (setq-default indent-tabs-mode nil
