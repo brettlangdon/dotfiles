@@ -51,13 +51,10 @@
   (when (not package-archive-contents)
     (package-refresh-contents))
 
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-
   ;; Configure use-package
   ;; https://github.com/jwiegley/use-package
   (eval-when-compile
+    (add-to-list 'load-path "~/.emacs.d/use-package/")
     (require 'use-package))
   (setq use-package-always-ensure t)
 
