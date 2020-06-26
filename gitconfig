@@ -1,27 +1,27 @@
 [user]
-        name = brettlangdon
-        email = me@brett.is
-        signingkey = B664881177781B04
+  name = brettlangdon
+  email = me@brett.is
+	signingkey = A70042D88B95AA2B
 [credential]
-        helper = store
+  helper = store
 [core]
-        excludesfile = /Users/brettlangdon/.gitignore_global
-        editor = emacs -nw -Q
-        pager = diff-so-fancy | less --tabs=4 -RFX
-        whitespace = trailing-space,space-before-tab
+  excludesfile = /Users/brettlangdon/.gitignore_global
+  editor = emacs -nw -Q
+  pager = diff-so-fancy | less --tabs=4 -RFX
+  whitespace = trailing-space,space-before-tab
 [alias]
-        st = status
-        d = diff --color --minimal
-        dc = diff --color --minimal --cached
-        g = grep -p
-        dm = diff origin/master
+  st = status
+  d = diff --color --minimal
+  dc = diff --color --minimal --cached
+  g = grep -p
+  dm = diff origin/master
 [diff]
-        compactionHeuristic = true
-        algorithm = histogram
+  compactionHeuristic = true
+  algorithm = histogram
 [push]
-        default = simple
+  default = simple
 [grep]
-        lineNumber = true
+  lineNumber = true
 [commit]
   gpgsign = true
 [color]
