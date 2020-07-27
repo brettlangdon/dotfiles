@@ -27,14 +27,6 @@ export PYTHONDONTWRITEBYTECODE=1
 # DEV: Opt out of telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-# Configure ZSH
-export ZSH=$ZSH_DIR/oh-my-zsh
-export ZSH_THEME="agnoster"
-export DISABLE_AUTO_UPDATE="true"
-export COMPLETION_WAITING_DOTS="true"
-# DEV: `pip` and `nvm` are very slow to load
-export plugins=(git-extras python)
-
 # Configure RVM
 export rvm_project_rvmrc=1
 

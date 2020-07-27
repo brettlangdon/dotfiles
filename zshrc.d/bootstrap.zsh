@@ -7,8 +7,8 @@ source ${ZSH_DIR}/lib/aliases.sh
 # Load in base environment variables
 source ${ZSH_DIR}/.env.zsh
 
-# Load in oh-my-zsh
-source ${ZSH}/oh-my-zsh.sh
+# Bootstrap starship
+eval "$(starship init zsh)"
 
 # Load virtualenvwrapper if it exists
 # DEV: Load the lazy script for faster load times

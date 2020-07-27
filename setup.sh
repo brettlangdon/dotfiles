@@ -8,6 +8,8 @@
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 files="emacs.d gitconfig gitignore_global psqlrc zshrc.d zshrc"    # list of files/folders to symlink in homedir
+config_dir="~/.config/"
+config_files="starship.toml"  # list of files for ~/config/
 ##########
 
 # create dotfiles_old in homedir
@@ -29,6 +31,16 @@ for file in $files; do
         mv ~/.$file $olddir
         echo "Creating symlink to $file in home directory."
         ln -s $dir/$file ~/.$file
+    fi
+done
+
+# put starship.toml in place
+mkdir -p "$config_dir"
+for file in $config_files; do
+    if [ -e $file ]
+    then
+        echo "Creating symlink to $file in ~/.config/"
+        ln -s $dir/starship.toml $config_dir/starship.toml
     fi
 done
 
