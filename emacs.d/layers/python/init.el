@@ -30,8 +30,8 @@
 ;; https://github.com/wbolster/emacs-python-black
 (use-package python-black
   :demand t
-  :after python
-  :hook (python-mode . python-black-on-save-mode))
+  :after python)
+  ;; :hook (python-mode . python-black-on-save-mode))
 
 ;; Enable Flycheck for python
 (enable-flycheck 'python-mode-hook)
