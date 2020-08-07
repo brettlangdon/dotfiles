@@ -1,3 +1,6 @@
+# Enable completions
+autoload -Uz compinit && compinit
+
 # Load in custom functions
 source ${ZSH_DIR}/lib/functions.zsh
 
