@@ -10,3 +10,8 @@ style = "bold yellow"
 
 [time]
 disabled = false
+
+[aws]
+# I really only use 1 default region,
+# I don't need it showing all the time
+disabled = true
