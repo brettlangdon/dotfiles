@@ -1,8 +1,9 @@
-;; lsp-mode
-;; https://github.com/emacs-lsp/lsp-mode
-(use-package lsp-mode
-  :hook (python-mode . lsp)
-  :commands lsp)
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
 
 (use-package lsp-ui
   :ensure t
@@ -10,7 +11,7 @@
   :commands lsp-ui-mode)
 
 (use-package company-lsp
-  :hook (python-mode . lsp))
+  :commands company-lsp)
 
 ;; Enable pip-requirements when editing a `requirements.txt` file
 (use-package pip-requirements
@@ -30,8 +31,8 @@
 ;; https://github.com/wbolster/emacs-python-black
 (use-package python-black
   :demand t
-  :after python)
-  ;; :hook (python-mode . python-black-on-save-mode))
+  :after python
+  :hook (python-mode . python-black-on-save-mode))
 
 ;; Enable Flycheck for python
 (enable-flycheck 'python-mode-hook)
