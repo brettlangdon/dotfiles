@@ -15,3 +15,9 @@ disabled = false
 # I really only use 1 default region,
 # I don't need it showing all the time
 disabled = true
+
+[gcloud]
+disabled = true
+
+[username]
+disabled = true

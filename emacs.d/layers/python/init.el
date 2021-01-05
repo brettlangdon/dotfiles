@@ -1,17 +1,16 @@
+;; lsp-mode
+(setq lsp-enable-snippet nil)
 (use-package lsp-python-ms
   :ensure t
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
                           (require 'lsp-python-ms)
                           (lsp))))  ; or lsp-deferred
-
 (use-package lsp-ui
-  :ensure t
-  :hook (python-mode . lsp)
   :commands lsp-ui-mode)
 
-(use-package company-lsp
-  :commands company-lsp)
+(use-package helm-lsp
+  :commands helm-lsp-workspace-symbol)
 
 ;; Enable pip-requirements when editing a `requirements.txt` file
 (use-package pip-requirements
