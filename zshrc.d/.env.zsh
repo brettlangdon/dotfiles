@@ -37,12 +37,12 @@ export NVM_DIR=~/.nvm
 export GPG_TTY=$(tty)
 
 # Configure Path
-PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/.local/bin"
-PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
-PATH="/usr/local/heroku/bin:$PATH"
-PATH="/usr/local/opt/python/libexec/bin:$PATH"
+PATH="/usr/local/opt/sqlite/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
+PATH="/usr/local/opt/python@3.8/libexec/bin:$PATH"
+PATH="~/.local/bin:/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
+PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+PATH="$HOME/.poetry/bin:$PATH"
 export PATH="$HOME/.rvm/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
