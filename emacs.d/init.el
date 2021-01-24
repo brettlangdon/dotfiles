@@ -1,3 +1,6 @@
+;; https://github.com/kiwanami/emacs-epc/issues/35#issuecomment-756701267
+(setq byte-compile-warnings '(cl-functions))
+
 ;; -- Startup optimizations --
 ;; The below will increase the GC limits and remove the file name regex checker
 ;; for 5 seconds. This helps reduce the number of GC calls and the total time spent
