@@ -7,7 +7,7 @@
 ########## Variables
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="emacs.d gitconfig gitignore_global psqlrc zshrc.d zshrc"    # list of files/folders to symlink in homedir
+files="emacs.d gitconfig gitignore_global psqlrc sqliterc zshrc.d zshrc"    # list of files/folders to symlink in homedir
 config_dir="~/.config/"
 config_files="starship.toml"  # list of files for ~/config/
 ##########
@@ -29,9 +29,9 @@ for file in $files; do
     then
         echo "Moving $file to $olddir/$file"
         mv ~/.$file $olddir
-        echo "Creating symlink to $file in home directory."
-        ln -s $dir/$file ~/.$file
     fi
+    echo "Creating symlink to $file in home directory."
+    ln -s $dir/$file ~/.$file
 done
 
 # put starship.toml in place
