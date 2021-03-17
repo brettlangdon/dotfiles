@@ -1,7 +1,7 @@
 [user]
   name = brettlangdon
-  email = brett.langdon@datadoghq.com
-  signingkey = E6600FB894DB3D19
+  email = me@brett.is
+  signingkey = A70042D88B95AA2B
 
 [credential]
   helper = store

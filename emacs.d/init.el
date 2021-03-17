@@ -1,3 +1,11 @@
+;; https://github.com/kiwanami/emacs-epc/issues/35#issuecomment-756701267
+(setq byte-compile-warnings '(cl-functions))
+
+;; Fix for emacs 28.0.50 changing `define-obsolete-function-alias`
+;; https://www.reddit.com/r/emacs/comments/kqb9s9/cannot_recompile_packagess_error_wrong_number_of/gj3cfn3/?utm_source=reddit&utm_medium=web2x&context=3
+(load "~/.emacs.d/vendor/emacs_27_obsolete")
+
+
 ;; -- Startup optimizations --
 ;; The below will increase the GC limits and remove the file name regex checker
 ;; for 5 seconds. This helps reduce the number of GC calls and the total time spent
