@@ -38,7 +38,7 @@ export GPG_TTY=$(tty)
 
 # Configure Path
 PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/.local/bin"
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:$HOME/.local/bin"
 PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 PATH="/usr/local/heroku/bin:$PATH"
 PATH="/usr/local/opt/python/libexec/bin:$PATH"
