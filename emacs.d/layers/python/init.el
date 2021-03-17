@@ -33,5 +33,12 @@
   :after python
   :hook (python-mode . python-black-on-save-mode))
 
+;; Enable `isort`ing files
+;; https://github.com/paetzke/py-isort.el
+(use-package py-isort
+  :demand t
+  :after python
+  :hook (before-save . py-isort-before-save))
+
 ;; Enable Flycheck for python
 (enable-flycheck 'python-mode-hook)
