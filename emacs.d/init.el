@@ -233,7 +233,24 @@
   (use-package smartparens
     :diminish
     :config
-    (smartparens-global-mode)))
+    (smartparens-global-mode))
+
+  (use-package auth-source
+    :config
+    (customize-set-variable 'auth-sources (quote (macos-keychain-internet macos-keychain-generic))))
+
+  ;; Magit
+  ;; https://magit.vc/
+  (use-package magit
+    :diminish)
+
+  ;; Forge
+  (use-package forge
+    :after magit)
+
+  ;; github-review
+  (use-package github-review
+    :after forge))
 
 
 ;; -- Load layers --
