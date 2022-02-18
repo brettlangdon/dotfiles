@@ -52,7 +52,7 @@
   (require 'package)
 
   (add-to-list 'package-archives
-	             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+	             '("melpa" . "https://melpa.org/packages/") t)
 
   (package-initialize)
 
@@ -246,7 +246,32 @@
 
   ;; Forge
   (use-package forge
-    :after magit))
+    :after magit)
+
+(use-package lsp-mode
+  :hook ((
+          python-mode     ; pyright
+        ) . lsp-deferred)
+  :commands lsp
+  :config
+  (setq lsp-auto-guess-root t)
+  (setq lsp-log-io nil)
+  (setq lsp-restart 'auto-restart)
+  (setq lsp-enable-symbol-highlighting nil)
+  (setq lsp-enable-on-type-formatting nil)
+  (setq lsp-signature-auto-activate nil)
+  (setq lsp-signature-render-documentation nil)
+  (setq lsp-eldoc-hook nil)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-modeline-diagnostics-enable nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-semantic-tokens-enable nil)
+  (setq lsp-enable-folding nil)
+  (setq lsp-enable-imenu nil)
+  (setq lsp-enable-snippet nil)
+  (setq read-process-output-max (* 1024 1024)) ;; 1MB
+  (setq lsp-idle-delay 0.5))
+  )
 
 ;; -- Load layers --
 (mapc 'load (file-expand-wildcards (expand-file-name "layers/*/*.el" current-dir)))
