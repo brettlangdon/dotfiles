@@ -13,6 +13,7 @@
 
 ;; Enable cython-mode when editing a `*.pyx` file
 (use-package cython-mode
+  :ensure t
   :mode ("\\.pyx" . cython-mode)
   :diminish cython-mode)
 
