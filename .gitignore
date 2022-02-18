@@ -16,3 +16,4 @@ emacs.d/forge-database.sqlite
 emacs.d/projects
 emacs.d/transient 
 emacs.d/eln-cache
+emacs.d/.dap-breakpoints

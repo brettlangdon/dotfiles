@@ -5,18 +5,6 @@
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-doc-header t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-border (face-foreground 'default))
-  (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-sideline-delay 0.05))
-
-(use-package helm-lsp
-  :commands helm-lsp-workspace-symbol)
 
 ;; Enable pip-requirements when editing a `requirements.txt` file
 (use-package pip-requirements
@@ -48,3 +36,5 @@
 
 ;; Enable Flycheck for python
 (enable-flycheck 'python-mode-hook)
+
+(require 'dap-python)
