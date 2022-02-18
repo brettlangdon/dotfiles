@@ -246,12 +246,7 @@
 
   ;; Forge
   (use-package forge
-    :after magit)
-
-  ;; github-review
-  (use-package github-review
-    :after forge))
-
+    :after magit))
 
 ;; -- Load layers --
 (mapc 'load (file-expand-wildcards (expand-file-name "layers/*/*.el" current-dir)))
