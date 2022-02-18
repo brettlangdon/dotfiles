@@ -53,7 +53,6 @@
 
   (add-to-list 'package-archives
 	             '("melpa" . "https://melpa.org/packages/") t)
-
   (package-initialize)
 
   (when (not package-archive-contents)
@@ -246,7 +245,51 @@
 
   ;; Forge
   (use-package forge
-    :after magit)
+    :after magit
+    :init
+    (setq forge-topic-list-limit '(100 . 0 ))
+    (setq forge-topic-list-columns
+          '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
+            ("Title" 50 t nil title  nil)
+            ("State" 10 t nil state nil)
+            ("Author" 15 t nil author nil)
+            )))
+
+  (defun forge-browse-buffer-file ()
+    (interactive)
+    (browse-url
+     (let
+         ((rev (magit-rev-abbrev "HEAD"))
+          (repo (forge-get-repository 'stub))
+          (file (magit-file-relative-name buffer-file-name))
+          (highlight
+           (if
+               (use-region-p)
+               (let ((l1 (line-number-at-pos (region-beginning)))
+                     (l2 (line-number-at-pos (- (region-end) 1))))
+                 (format "#L%d-L%d" l1 l2))
+             ""
+             )))
+       (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
+                      `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
+
+  (defun forge-copy-buffer-file ()
+    (interactive)
+    (kill-new
+     (let
+         ((rev (magit-rev-abbrev "HEAD"))
+          (repo (forge-get-repository 'stub))
+          (file (magit-file-relative-name buffer-file-name))
+          (highlight
+           (if
+               (use-region-p)
+               (let ((l1 (line-number-at-pos (region-beginning)))
+                     (l2 (line-number-at-pos (- (region-end) 1))))
+                 (format "#L%d-L%d" l1 l2))
+             ""
+             )))
+       (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
+                      `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
 
 (use-package lsp-mode
   :hook ((
