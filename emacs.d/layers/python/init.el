@@ -1,10 +1,10 @@
 ;; lsp-mode
 (setq lsp-enable-snippet nil)
-(use-package lsp-python-ms
+(use-package lsp-pyright
   :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
+  :init (setq lsp-pyright-auto-import-completions t)
   :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
+                          (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
 (use-package lsp-ui
   :commands lsp-ui-mode)
