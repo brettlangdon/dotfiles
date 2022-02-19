@@ -297,6 +297,12 @@
         ) . lsp-deferred)
   :commands lsp
   :config
+  (setq lsp-file-watch-ignored-directories (append lsp-file-watch-ignored-directories
+                                                   '(
+                                                     "[/\\\\]\\.riot\\'"
+                                                     "[/\\\\]\\.ddriot\\'"
+                                                     "[/\\\\]\\.ddtox\\'"
+                                                     "[/\\\\]__pycache__\\'")))
   (setq lsp-auto-guess-root t)
   (setq lsp-log-io nil)
   (setq lsp-restart 'auto-restart)
