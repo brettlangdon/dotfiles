@@ -18,3 +18,4 @@ emacs.d/transient
 emacs.d/eln-cache
 emacs.d/.dap-breakpoints
 emacs.d/eshell
+emacs.d/multisession/
