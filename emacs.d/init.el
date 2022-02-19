@@ -304,7 +304,7 @@
   (setq lsp-enable-on-type-formatting nil)
   (setq lsp-signature-auto-activate nil)
   (setq lsp-signature-render-documentation nil)
-  (setq lsp-eldoc-hook nil)
+  (setq lsp-eldoc-enable-hover t)
   (setq lsp-modeline-code-actions-enable nil)
   (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-headerline-breadcrumb-enable nil)
