@@ -1,6 +1,7 @@
 ;; Markdown-mode
 ;; https://github.com/jrblevin/markdown-mode
 (use-package markdown-mode
+  :defer t
   :diminish gfm-mode
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . gfm-mode)

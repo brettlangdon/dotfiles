@@ -13,8 +13,7 @@
 (progn
   ;; Set garbage collection threshold
   ;; https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
-  (setq gc-cons-threshold-original gc-cons-threshold
-        gc-cons-percentage-original gc-cons-percentage)
+  (setq gc-cons-percentage-original gc-cons-percentage)
   (setq gc-cons-threshold (* 1024 1024 100)
         gc-cons-percentage 0.6)
 
@@ -28,10 +27,9 @@
   (run-with-idle-timer
    5 nil
    (lambda ()
-     (setq gc-cons-threshold gc-cons-threshold-original)
+     (setq gc-cons-threshold (* 2 1000 1000))
      (setq gc-cons-percentage gc-cons-percentage-original)
      (setq file-name-handler-alist file-name-handler-alist-original)
-     (makunbound 'gc-cons-threshold-original)
      (makunbound 'gc-cons-percentage-original)
      (makunbound 'file-name-handler-alist-original))))
 
@@ -136,6 +134,7 @@
 
   ;; Enable center cursor
   (use-package centered-cursor-mode
+    :defer t
     :load-path "vendor/"
     :functions global-centered-cursor-mode
     :config
@@ -154,6 +153,7 @@
   ;; Configure osx-clipboard
   ;; https://github.com/joddie/osx-clipboard-mode
   (use-package osx-clipboard
+    :defer t
     :diminish osx-clipboard-mode
     :config
     (osx-clipboard-mode t))
@@ -162,6 +162,7 @@
   ;; https://emacs-helm.github.io/helm/
   (setq personal-keybindings nil)
   (use-package helm-config
+    :defer t
     :ensure helm
     :diminish helm-mode
     :bind (("M-x" . helm-M-x)
@@ -174,11 +175,13 @@
     (helm-mode 1))
 
   (use-package helm-ag
+    :defer t
     :requires helm)
 
   ;; Configure projectile
   ;; https://www.projectile.mx/en/latest/
   (use-package projectile
+    :defer 1
     :delight '(:eval (concat " " (projectile-project-name)))
     :functions (projectile-project-p
                 projectile-project-root
@@ -195,12 +198,14 @@
 
   ;; Configure helm-projectile
   ;; https://github.com/bbatsov/helm-projectile
-  (use-package helm-projectile)
+  (use-package helm-projectile
+    :defer 1)
 
 
   ;; Configure company-mode
   ;; http://company-mode.github.io/
   (use-package company
+    :defer 1
     :diminish company-mode
     :init
     (setq company-idle-delay 0.2
@@ -215,6 +220,7 @@
   ;; Configure ws-butler
   ;; https://github.com/lewang/ws-butler
   (use-package ws-butler
+    :defer 1
     :init
     (setq ws-butler-keep-whitespace-before-point nil
 	        require-final-newline t)
@@ -224,27 +230,32 @@
 
   ;; Configure diminish
   ;; https://github.com/myrjola/diminish.el
-  (use-package diminish)
+  (use-package diminish
+    :defer t)
 
 
   ;; Smartparens
   ;; https://github.com/Fuco1/smartparens
   (use-package smartparens
+    :defer t
     :diminish
     :config
     (smartparens-global-mode))
 
   (use-package auth-source
+    :defer t
     :config
     (customize-set-variable 'auth-sources (quote (macos-keychain-internet macos-keychain-generic))))
 
   ;; Magit
   ;; https://magit.vc/
   (use-package magit
+    :defer 5
     :diminish)
 
   ;; Forge
   (use-package forge
+    :defer 5
     :after magit
     :init
     (setq forge-topic-list-limit '(100 . 0 ))
@@ -292,6 +303,7 @@
                       `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
 
 (use-package lsp-mode
+  :defer t
   :hook ((
           python-mode     ; pyright
         ) . lsp-deferred)
@@ -322,6 +334,7 @@
   (setq lsp-idle-delay 0.5))
 
   (use-package lsp-ui
+    :defer t
     :commands lsp-ui-mode
     :config
     (setq lsp-ui-doc-enable nil)
@@ -332,10 +345,12 @@
     (setq lsp-ui-sideline-delay 0.05))
 
   (use-package helm-lsp
+    :defer t
     :commands helm-lsp-workspace-symbol)
 
   ;; dap-mode
   (use-package dap-mode
+    :defer 5
     :ensure t :after lsp-mode
     :config
     (dap-mode t)
