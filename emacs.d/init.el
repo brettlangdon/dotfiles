@@ -302,60 +302,60 @@
        (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
                       `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
 
-(use-package lsp-mode
-  :defer t
-  :hook ((
-          python-mode     ; pyright
-        ) . lsp-deferred)
-  :commands lsp
-  :config
-  (setq lsp-file-watch-ignored-directories (append lsp-file-watch-ignored-directories
-                                                   '(
-                                                     "[/\\\\]\\.riot\\'"
-                                                     "[/\\\\]\\.ddriot\\'"
-                                                     "[/\\\\]\\.ddtox\\'"
-                                                     "[/\\\\]__pycache__\\'")))
-  (setq lsp-auto-guess-root t)
-  (setq lsp-log-io nil)
-  (setq lsp-restart 'auto-restart)
-  (setq lsp-enable-symbol-highlighting nil)
-  (setq lsp-enable-on-type-formatting nil)
-  (setq lsp-signature-auto-activate nil)
-  (setq lsp-signature-render-documentation nil)
-  (setq lsp-eldoc-enable-hover t)
-  (setq lsp-modeline-code-actions-enable nil)
-  (setq lsp-modeline-diagnostics-enable nil)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-semantic-tokens-enable nil)
-  (setq lsp-enable-folding nil)
-  (setq lsp-enable-imenu nil)
-  (setq lsp-enable-snippet nil)
-  (setq read-process-output-max (* 1024 1024)) ;; 1MB
-  (setq lsp-idle-delay 0.5))
-
-  (use-package lsp-ui
+  (use-package lsp-mode
     :defer t
-    :commands lsp-ui-mode
+    :hook ((
+            python-mode     ; pyright
+          ) . lsp-deferred)
+    :commands lsp
     :config
-    (setq lsp-ui-doc-enable nil)
-    (setq lsp-ui-doc-header t)
-    (setq lsp-ui-doc-include-signature t)
-    (setq lsp-ui-doc-border (face-foreground 'default))
-    (setq lsp-ui-sideline-show-code-actions t)
-    (setq lsp-ui-sideline-delay 0.05))
+    (setq lsp-enable-file-watchers nil)
+    (setq lsp-auto-guess-root t)
+    (setq lsp-log-io nil)
+    (setq lsp-restart 'auto-restart)
+    (setq lsp-enable-symbol-highlighting nil)
+    (setq lsp-enable-on-type-formatting nil)
+    (setq lsp-signature-auto-activate nil)
+    (setq lsp-signature-render-documentation nil)
+    (setq lsp-eldoc-enable-hover t)
+    (setq lsp-modeline-code-actions-enable nil)
+    (setq lsp-modeline-diagnostics-enable nil)
+    (setq lsp-headerline-breadcrumb-enable nil)
+    (setq lsp-semantic-tokens-enable nil)
+    (setq lsp-enable-folding nil)
+    (setq lsp-enable-imenu nil)
+    (setq lsp-enable-snippet nil)
+    (setq read-process-output-max (* 1024 1024)) ;; 1MB
+    (setq lsp-idle-delay 0.5))
 
-  (use-package helm-lsp
-    :defer t
-    :commands helm-lsp-workspace-symbol)
+    (use-package lsp-ui
+      :defer t
+      :commands lsp-ui-mode
+      :config
+      (setq lsp-ui-doc-enable nil)
+      (setq lsp-ui-doc-header t)
+      (setq lsp-ui-doc-include-signature t)
+      (setq lsp-ui-doc-border (face-foreground 'default))
+      (setq lsp-ui-sideline-show-code-actions t)
+      (setq lsp-ui-sideline-delay 0.05))
 
-  ;; dap-mode
-  (use-package dap-mode
-    :defer 5
-    :ensure t :after lsp-mode
-    :config
-    (dap-mode t)
-    (dap-ui-mode t))
+    (use-package helm-lsp
+      :defer t
+      :commands helm-lsp-workspace-symbol)
 
+    ;; dap-mode
+    (use-package dap-mode
+      :defer t
+      :ensure t :after lsp-mode
+      :config
+      (dap-mode t)
+      (dap-ui-mode t))
+
+    ;; ;; Turn `C-]' into a sticky "super" modifier.
+    (define-key local-function-key-map [?\C-\]] 'event-apply-super-modifier)
+    ;; Move the global binding for C-] to C-s-]
+    (define-key global-map [?\C-\s-\]] (lookup-key global-map [?\C-\]] t))
+    (define-key global-map [?\C-\]] nil)
   )
 
 ;; -- Load layers --

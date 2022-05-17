@@ -42,6 +42,6 @@
   :hook (before-save . py-isort-before-save))
 
 ;; Enable Flycheck for python
-(enable-flycheck 'python-mode-hook)
+;; (enable-flycheck 'python-mode-hook)
 
 (require 'dap-python)
