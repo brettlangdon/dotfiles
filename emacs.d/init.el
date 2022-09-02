@@ -49,8 +49,8 @@
   ;; Configure package
   (require 'package)
 
-  (add-to-list 'package-archives
-	             '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   (package-initialize)
 
   (when (not package-archive-contents)
@@ -145,7 +145,7 @@
   (use-package doom-modeline
     :ensure t
     :defer t
-    :hook (after-init . doom-modeline-init)))
+    :hook (after-init . doom-modeline-mode)))
 
 
 ;; -- Global packages --
@@ -153,7 +153,6 @@
   ;; Configure osx-clipboard
   ;; https://github.com/joddie/osx-clipboard-mode
   (use-package osx-clipboard
-    :defer t
     :diminish osx-clipboard-mode
     :config
     (osx-clipboard-mode t))
@@ -301,6 +300,7 @@
              )))
        (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
                       `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
+
 
   (use-package lsp-mode
     :defer t

@@ -7,3 +7,4 @@
 *.projectile
 *.coverage
 htmlcov
+*.ccls-cache
