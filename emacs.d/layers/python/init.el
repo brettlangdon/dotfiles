@@ -44,4 +44,4 @@
 ;; Enable Flycheck for python
 ;; (enable-flycheck 'python-mode-hook)
 
-(require 'dap-python)
+;; (require 'dap-python)

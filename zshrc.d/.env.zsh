@@ -8,6 +8,9 @@ setopt INC_APPEND_HISTORY_TIME
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
+# Omit `/` from the list of word characters so delete work on a path only deletes sub-path and not the whole thing
+export WORDCHARS=${WORDCHARS/\/}
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM="xterm-256color"
@@ -49,6 +52,7 @@ PATH="$HOME/.cargo/bin:$PATH"
 PATH="~/.local/bin:/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
 PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 PATH="$HOME/.poetry/bin:$PATH"
+PATH="/opt/homebrew/bin:$PATH"
 command -v pyenv 2>&1 > /dev/null && PATH="$(pyenv root)/shims:${PATH}"
 export PATH="$HOME/.rvm/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"

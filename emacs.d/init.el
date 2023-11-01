@@ -320,7 +320,7 @@
     (setq lsp-eldoc-enable-hover t)
     (setq lsp-modeline-code-actions-enable nil)
     (setq lsp-modeline-diagnostics-enable nil)
-    (setq lsp-headerline-breadcrumb-enable nil)
+    (setq lsp-headerline-breadcrumb-enable t)
     (setq lsp-semantic-tokens-enable nil)
     (setq lsp-enable-folding nil)
     (setq lsp-enable-imenu nil)
@@ -343,13 +343,19 @@
       :defer t
       :commands helm-lsp-workspace-symbol)
 
+    (use-package copilot
+      :quelpa (copilot :fetcher github
+                       :repo "zerolfx/copilot.el"
+                       :branch "main"
+                       :files ("dist" "*.el")))
+
     ;; dap-mode
-    (use-package dap-mode
-      :defer t
-      :ensure t :after lsp-mode
-      :config
-      (dap-mode t)
-      (dap-ui-mode t))
+    ;; (use-package dap-mode
+    ;;   :defer t
+    ;;   :ensure t :after lsp-mode
+    ;;   :config
+    ;;   (dap-mode t)
+    ;;   (dap-ui-mode t))
 
     ;; ;; Turn `C-]' into a sticky "super" modifier.
     (define-key local-function-key-map [?\C-\]] 'event-apply-super-modifier)
