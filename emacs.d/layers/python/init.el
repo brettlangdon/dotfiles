@@ -25,23 +25,5 @@
   :hook (python-mode . sphinx-doc-mode)
   :commands sphinx-docs-mode)
 
-;; Enable `black`ing files
-;; https://github.com/wbolster/emacs-python-black
-(use-package python-black
-  :defer t
-  :demand t
-  :after python
-  :hook (python-mode . python-black-on-save-mode))
 
-;; Enable `isort`ing files
-;; https://github.com/paetzke/py-isort.el
-(use-package py-isort
-  :defer t
-  :demand t
-  :after python
-  :hook (before-save . py-isort-before-save))
-
-;; Enable Flycheck for python
-;; (enable-flycheck 'python-mode-hook)
-
-;; (require 'dap-python)
+(add-hook 'before-save-hook 'lsp-format-buffer)

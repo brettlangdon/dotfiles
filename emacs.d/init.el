@@ -303,11 +303,6 @@
 
 
   (use-package lsp-mode
-    :defer t
-    :hook ((
-            python-mode     ; pyright
-          ) . lsp-deferred)
-    :commands lsp
     :config
     (setq lsp-enable-file-watchers nil)
     (setq lsp-auto-guess-root t)
@@ -329,13 +324,13 @@
     (setq lsp-idle-delay 0.5))
 
     (use-package lsp-ui
-      :defer t
-      :commands lsp-ui-mode
       :config
-      (setq lsp-ui-doc-enable nil)
+      (setq lsp-ui-doc-enable t)
       (setq lsp-ui-doc-header t)
+      (setq lsp-ui-doc-show-with-cursor t)
       (setq lsp-ui-doc-include-signature t)
       (setq lsp-ui-doc-border (face-foreground 'default))
+      (setq lsp-ui-sideline-enable t)
       (setq lsp-ui-sideline-show-code-actions t)
       (setq lsp-ui-sideline-delay 0.05))
 
@@ -343,19 +338,18 @@
       :defer t
       :commands helm-lsp-workspace-symbol)
 
+    (use-package wgrep-ag)    
+    (use-package quelpa)
+    (use-package quelpa-use-package)
+
     (use-package copilot
       :quelpa (copilot :fetcher github
                        :repo "zerolfx/copilot.el"
                        :branch "main"
-                       :files ("dist" "*.el")))
-
-    ;; dap-mode
-    ;; (use-package dap-mode
-    ;;   :defer t
-    ;;   :ensure t :after lsp-mode
-    ;;   :config
-    ;;   (dap-mode t)
-    ;;   (dap-ui-mode t))
+                       :files ("dist" "*.el"))
+      :config
+      (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+      (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 
     ;; ;; Turn `C-]' into a sticky "super" modifier.
     (define-key local-function-key-map [?\C-\]] 'event-apply-super-modifier)
