@@ -246,60 +246,60 @@
     :config
     (customize-set-variable 'auth-sources (quote (macos-keychain-internet macos-keychain-generic))))
 
-  ;; Magit
-  ;; https://magit.vc/
-  (use-package magit
-    :defer 5
-    :diminish)
+  ;; ;; Magit
+  ;; ;; https://magit.vc/
+  ;; (use-package magit
+  ;;   :defer 5
+  ;;   :diminish)
 
-  ;; Forge
-  (use-package forge
-    :defer 5
-    :after magit
-    :init
-    (setq forge-topic-list-limit '(100 . 0 ))
-    (setq forge-topic-list-columns
-          '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
-            ("Title" 50 t nil title  nil)
-            ("State" 10 t nil state nil)
-            ("Author" 15 t nil author nil)
-            )))
+  ;; ;; Forge
+  ;; (use-package forge
+  ;;   :defer 5
+  ;;   :after magit
+  ;;   :init
+  ;;   (setq forge-topic-list-limit '(100 . 0 ))
+  ;;   (setq forge-topic-list-columns
+  ;;         '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
+  ;;           ("Title" 50 t nil title  nil)
+  ;;           ("State" 10 t nil state nil)
+  ;;           ("Author" 15 t nil author nil)
+  ;;           )))
 
-  (defun forge-browse-buffer-file ()
-    (interactive)
-    (browse-url
-     (let
-         ((rev (magit-rev-abbrev "HEAD"))
-          (repo (forge-get-repository 'stub))
-          (file (magit-file-relative-name buffer-file-name))
-          (highlight
-           (if
-               (use-region-p)
-               (let ((l1 (line-number-at-pos (region-beginning)))
-                     (l2 (line-number-at-pos (- (region-end) 1))))
-                 (format "#L%d-L%d" l1 l2))
-             ""
-             )))
-       (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
-                      `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
+  ;; (defun forge-browse-buffer-file ()
+  ;;   (interactive)
+  ;;   (browse-url
+  ;;    (let
+  ;;        ((rev (magit-rev-abbrev "HEAD"))
+  ;;         (repo (forge-get-repository 'stub))
+  ;;         (file (magit-file-relative-name buffer-file-name))
+  ;;         (highlight
+  ;;          (if
+  ;;              (use-region-p)
+  ;;              (let ((l1 (line-number-at-pos (region-beginning)))
+  ;;                    (l2 (line-number-at-pos (- (region-end) 1))))
+  ;;                (format "#L%d-L%d" l1 l2))
+  ;;            ""
+  ;;            )))
+  ;;      (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
+  ;;                     `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
 
-  (defun forge-copy-buffer-file ()
-    (interactive)
-    (kill-new
-     (let
-         ((rev (magit-rev-abbrev "HEAD"))
-          (repo (forge-get-repository 'stub))
-          (file (magit-file-relative-name buffer-file-name))
-          (highlight
-           (if
-               (use-region-p)
-               (let ((l1 (line-number-at-pos (region-beginning)))
-                     (l2 (line-number-at-pos (- (region-end) 1))))
-                 (format "#L%d-L%d" l1 l2))
-             ""
-             )))
-       (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
-                      `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
+  ;; (defun forge-copy-buffer-file ()
+  ;;   (interactive)
+  ;;   (kill-new
+  ;;    (let
+  ;;        ((rev (magit-rev-abbrev "HEAD"))
+  ;;         (repo (forge-get-repository 'stub))
+  ;;         (file (magit-file-relative-name buffer-file-name))
+  ;;         (highlight
+  ;;          (if
+  ;;              (use-region-p)
+  ;;              (let ((l1 (line-number-at-pos (region-beginning)))
+  ;;                    (l2 (line-number-at-pos (- (region-end) 1))))
+  ;;                (format "#L%d-L%d" l1 l2))
+  ;;            ""
+  ;;            )))
+  ;;      (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
+  ;;                     `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
 
 
   (use-package lsp-mode
@@ -342,20 +342,40 @@
     (use-package quelpa)
     (use-package quelpa-use-package)
 
+    (use-package ellama
+      :ensure t
+      :init
+      (setopt ellama-language "English")
+      (require 'llm-ollama)
+      (setopt ellama-keymap-prefix "C-c e")
+      (setopt ellama-provider
+		          (make-llm-ollama
+		           :chat-model "deepseek-coder:6.7b" :embedding-model "deepseek-coder:6.7b")))
+
     (use-package copilot
       :quelpa (copilot :fetcher github
-                       :repo "zerolfx/copilot.el"
+                       :repo "copilot-emacs/copilot.el"
                        :branch "main"
                        :files ("dist" "*.el"))
-      :config
-      (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-      (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
+      :init
+      (add-hook 'prog-mode-hook 'copilot-mode))
 
+    (use-package tree-sitter
+      :init
+      (global-tree-sitter-mode)
+      (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+    (use-package tree-sitter-langs)
+    
     ;; ;; Turn `C-]' into a sticky "super" modifier.
     (define-key local-function-key-map [?\C-\]] 'event-apply-super-modifier)
     ;; Move the global binding for C-] to C-s-]
     (define-key global-map [?\C-\s-\]] (lookup-key global-map [?\C-\]] t))
     (define-key global-map [?\C-\]] nil)
+
+    ;; tab to complete copilot completions
+    (define-key copilot-completion-map (kbd "C-c <tab>") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "C-c TAB") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "C-c n n") 'copilot-next-completion)        
   )
 
 ;; -- Load layers --
