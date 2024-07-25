@@ -5,20 +5,18 @@
 ;; Author: John Wiegley <johnw@newartisans.com>
 ;; Maintainer: John Wiegley <johnw@newartisans.com>
 
-;; This file is part of GNU Emacs.
-
-;; GNU Emacs is free software: you can redistribute it and/or modify
+;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 
-;; GNU Emacs is distributed in the hope that it will be useful,
+;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -26,10 +24,6 @@
 ;; keywords.  Note that these are currently still baked into
 ;; `use-package-keywords' and `use-package-deferring-keywords', although this
 ;; is harmless if they are never used.
-;;
-;; These keywords are made available by default by requiring `use-package'.
-;;
-;; See the `use-package' info manual for more information.
 
 ;;; Code:
 
@@ -38,14 +32,15 @@
 
 ;;;###autoload
 (defun use-package-autoload-keymap (keymap-symbol package override)
-  "Load PACKAGE and bind key sequence invoking this function to KEYMAP-SYMBOL.
-Then simulate pressing the same key sequence a again, so that the
-next key pressed is routed to the newly loaded keymap.
+  "Loads PACKAGE and then binds the key sequence used to invoke
+this function to KEYMAP-SYMBOL. It then simulates pressing the
+same key sequence a again, so that the next key pressed is routed
+to the newly loaded keymap.
 
-This function supports use-package's :bind-keymap keyword.  It
+This function supports use-package's :bind-keymap keyword. It
 works by binding the given key sequence to an invocation of this
-function for a particular keymap.  The keymap is expected to be
-defined by the package.  In this way, loading the package is
+function for a particular keymap. The keymap is expected to be
+defined by the package. In this way, loading the package is
 deferred until the prefix key sequence is pressed."
   (if (not (require package nil t))
       (use-package-error (format "Cannot load package.el: %s" package))
@@ -69,17 +64,8 @@ deferred until the prefix key sequence is pressed."
   (let ((arg args)
         args*)
     (while arg
-      (let ((x (car arg))
-            (y (cadr arg)))
+      (let ((x (car arg)))
         (cond
-         ;; (KEY DESC . COMMAND), i.e. (KEY . (DESC . COMMAND))
-         ((and (or (stringp x)
-                   (vectorp x))
-               (consp y)
-               (stringp (car y))
-               (or (use-package-recognize-function (cdr y) t #'stringp)))
-          (setq args* (nconc args* (list (cons x y))))
-          (setq arg (cddr arg)))
          ;; (KEY . COMMAND)
          ((and (consp x)
                (or (stringp (car x))

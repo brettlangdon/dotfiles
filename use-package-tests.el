@@ -1,21 +1,19 @@
 ;;; use-package-tests.el --- Tests for use-package.el  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014-2022 Free Software Foundation, Inc.
-
-;; This file is part of GNU Emacs.
-
-;; GNU Emacs is free software: you can redistribute it and/or modify
+;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 
-;; GNU Emacs is distributed in the hope that it will be useful,
+;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
 
 ;;; Code:
 
@@ -575,7 +573,7 @@
 
 (ert-deftest use-package-test/:bind-1 ()
   (match-expansion
-   (use-package foo :bind ("C-k" . key1) ("C-u" ("Key 2" . key2)))
+   (use-package foo :bind ("C-k" . key1) ("C-u" . key2))
    `(progn
       (unless
           (fboundp 'key1)
@@ -585,11 +583,11 @@
         (autoload #'key2 "foo" nil t))
       (bind-keys :package foo
                  ("C-k" . key1)
-                 ("C-u" "Key 2" . key2)))))
+                 ("C-u" . key2)))))
 
 (ert-deftest use-package-test/:bind-2 ()
   (match-expansion
-   (use-package foo :bind (("C-k" . key1) ("C-u" ("Key 2" . key2))))
+   (use-package foo :bind (("C-k" . key1) ("C-u" . key2)))
    `(progn
       (unless (fboundp 'key1)
         (autoload #'key1 "foo" nil t))
@@ -597,7 +595,7 @@
         (autoload #'key2 "foo" nil t))
       (bind-keys :package foo
                  ("C-k" . key1)
-                 ("C-u" "Key 2" . key2)))))
+                 ("C-u" . key2)))))
 
 (ert-deftest use-package-test/:bind-3 ()
   (match-expansion
@@ -987,7 +985,7 @@
                          'foopkg :hook args)))
     (should-error (norm nil))
     (should (equal (norm '(bar))
-                   '((bar . foopkg))))
+                   '((bar . foopkg-mode))))
     (should (equal (norm '((bar . foopkg)))
                    '((bar . foopkg))))
     (should (equal (norm '((bar . baz)))
@@ -995,9 +993,9 @@
     (should (equal (norm '(((bar baz) . quux)))
                    '(((bar baz) . quux))))
     (should (equal (norm '(bar baz))
-                   '(((bar baz) . foopkg))))
+                   '(((bar baz) . foopkg-mode))))
     (should (equal (norm '((bar baz) (quux bow)))
-                   '(((bar baz) . foopkg) ((quux bow) . foopkg))))
+                   '(((bar baz) . foopkg-mode) ((quux bow) . foopkg-mode))))
     (should (equal (norm '((bar . baz) (quux . bow)))
                    '((bar . baz) (quux . bow))))
     (should (equal (norm '(((bar1 bar2) . baz) ((quux1 quux2) . bow)))
@@ -1507,6 +1505,37 @@
              (config)
              t))))))
 
+(ert-deftest use-package-test/pre-post-hooks-with-:config ()
+  (let ((use-package-inject-hooks t))
+    (match-expansion
+     (use-package foo :config (config))
+     `(progn
+       (when
+           (run-hook-with-args-until-failure 'use-package--foo--pre-init-hook)
+         (run-hooks 'use-package--foo--post-init-hook))
+       (require 'foo nil nil)
+       (when
+           (run-hook-with-args-until-failure 'use-package--foo--pre-config-hook)
+         (config)
+         (run-hooks 'use-package--foo--post-config-hook))
+       t))))
+
+(ert-deftest use-package-test/pre-post-hooks-without-:config ()
+  ;; https://github.com/jwiegley/use-package/issues/785
+  (let ((use-package-inject-hooks t))
+    (match-expansion
+     (use-package foo)
+     `(progn
+        (when
+            (run-hook-with-args-until-failure 'use-package--foo--pre-init-hook)
+          (run-hooks 'use-package--foo--post-init-hook))
+        (require 'foo nil nil)
+        (when
+            (run-hook-with-args-until-failure 'use-package--foo--pre-config-hook)
+          t
+          (run-hooks 'use-package--foo--post-config-hook))
+        t))))
+
 (ert-deftest use-package-test-normalize/:diminish ()
   (should (equal (use-package-normalize-diminish 'foopkg :diminish nil)
                  '(foopkg-mode)))
@@ -1926,9 +1955,9 @@
      (use-package nonexistent
        :hook lisp-mode)
      `(when (locate-library nonexistent)
-        (unless (fboundp 'nonexistent)
-          (autoload #'nonexistent "nonexistent" nil t))
-        (add-hook 'lisp-mode-hook #'nonexistent)))))
+        (unless (fboundp 'nonexistent-mode)
+          (autoload #'nonexistent-mode "nonexistent" nil t))
+        (add-hook 'lisp-mode-hook #'nonexistent-mode)))))
 
 (ert-deftest bind-key/:prefix-map ()
   (match-expansion

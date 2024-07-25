@@ -5,27 +5,29 @@
 ;; Author: John Wiegley <johnw@newartisans.com>
 ;; Maintainer: John Wiegley <johnw@newartisans.com>
 
-;; This file is part of GNU Emacs.
-
-;; GNU Emacs is free software: you can redistribute it and/or modify
+;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 
-;; GNU Emacs is distributed in the hope that it will be useful,
+;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; This file contains the core implementation of the `use-package'
-;; macro.
+;; The `use-package' declaration macro allows you to isolate package
+;; configuration in your ".emacs" in a way that is performance-oriented and,
+;; well, just tidy.  I created it because I have over 80 packages that I use
+;; in Emacs, and things were getting difficult to manage.  Yet with this
+;; utility my total load time is just under 1 second, with no loss of
+;; functionality!
 ;;
-;; See the `use-package' info manual for more information.
+;; Please see README.md from the same repository for documentation.
 
 ;;; Code:
 
@@ -61,9 +63,7 @@
 
 (defgroup use-package nil
   "A `use-package' declaration for simplifying your `.emacs'."
-  :group 'initialization
-  :link '(custom-manual "(use-package) Top")
-  :version "29.1")
+  :group 'startup)
 
 (defconst use-package-version "2.4.4"
   "This version of `use-package'.")
@@ -100,7 +100,8 @@
     :load
     ;; This must occur almost last; the only forms which should appear after
     ;; are those that must happen directly after the config forms.
-    :config)
+    :config
+    :local)
   "The set of valid keywords, in the order they are processed in.
 The order of this list is *very important*, so it is only
 advisable to insert new keywords, never to delete or reorder
@@ -963,18 +964,10 @@ If RECURSED is non-nil, recurse into sublists."
 
 (defun use-package-autoloads-mode (_name _keyword args)
   (mapcar
-   #'(lambda (x)
-       (cond
-        ((consp (cdr x))
-         (cons (cddr x) 'command))
-        ((consp x)
-         (cons (cdr x) 'command))))
+   #'(lambda (x) (cons (cdr x) 'command))
    (cl-remove-if-not #'(lambda (x)
-                         (or (and (consp x)
-                                  (use-package-non-nil-symbolp (cdr x)))
-                             (and (consp x)
-                                  (consp (cdr x))
-                                  (use-package-non-nil-symbolp (cddr x)))))
+                         (and (consp x)
+                              (use-package-non-nil-symbolp (cdr x))))
                      args)))
 
 (defun use-package-handle-mode (name alist args rest state)
@@ -1305,7 +1298,10 @@ meaning:
                               (setq every nil)))
                           every))))
          #'use-package-recognize-function
-         name label arg))))
+         (if (string-suffix-p "-mode" (symbol-name name))
+             name
+           (intern (concat (symbol-name name) "-mode")))
+         label arg))))
 
 (defalias 'use-package-autoloads/:hook 'use-package-autoloads-mode)
 
@@ -1584,6 +1580,31 @@ no keyword implies `:all'."
      (when use-package-compute-statistics
        `((use-package-statistics-gather :config ',name t))))))
 
+;;;; :local
+
+(defun use-package-normalize/:local (name keyword args)
+  (let ((first-arg-name (symbol-name (caar args))))
+    (if (not (string-suffix-p "-hook" first-arg-name))
+        (let* ((sym-name (symbol-name name))
+               (addition (if (string-suffix-p "-mode" sym-name)
+                             "-hook"
+                           "-mode-hook"))
+               (hook (intern (concat sym-name addition))))
+          `((,hook . ,(use-package-normalize-forms name keyword args))))
+      (cl-loop for (hook . code) in args
+               collect `(,hook . ,(use-package-normalize-forms name keyword code))))))
+
+(defun use-package-handler/:local (name _keyword arg rest state)
+  (let* ((body (use-package-process-keywords name rest state)))
+    (use-package-concat
+     body
+     (cl-loop for (hook . code) in arg
+              for func-name = (intern (concat "use-package-func/" (symbol-name hook)))
+              collect (progn
+                        (push 'progn code)
+                        `(defun ,func-name () ,code))
+              collect `(add-hook ',hook ',func-name)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; The main macro
@@ -1614,8 +1635,8 @@ no keyword implies `:all'."
 (defmacro use-package (name &rest args)
   "Declare an Emacs package by specifying a group of configuration options.
 
-For the full documentation, see Info node `(use-package) top'.
-Usage:
+For full documentation, please see the README file that came with
+this file.  Usage:
 
   (use-package package-name
      [:keyword [option]]...)
@@ -1652,14 +1673,11 @@ Usage:
                  `:magic-fallback', or `:interpreter'.  This can be an integer,
                  to force loading after N seconds of idle time, if the package
                  has not already been loaded.
+:after           Delay the use-package declaration until after the named modules
+                 have loaded. Once load, it will be as though the use-package
+                 declaration (without `:after') had been seen at that moment.
 :demand          Prevent the automatic deferred loading introduced by constructs
                  such as `:bind' (see `:defer' for the complete list).
-
-:after           Delay the effect of the use-package declaration
-                 until after the named libraries have loaded.
-                 Before they have been loaded, no other keyword
-                 has any effect at all, and once they have been
-                 loaded it is as if `:after' was not specified.
 
 :if EXPR         Initialize and load only if EXPR evaluates to a non-nil value.
 :disabled        The package is ignored completely if this keyword is present.
