@@ -166,21 +166,7 @@ The `:bind` keyword takes either a cons or a list of conses:
          ("M-o w" . highlight-phrase)))
 ```
 
-Alternatively, the command name may be replaced with a cons `(desc . command)`,
-where `desc` is a string describing `command`, which is the name of a command
-to bind to:
-
-```elisp
-(use-package avy
-  :bind ("C-:" ("Jump to char" . avy-goto-char)
-         "M-g f" ("Jump to line" . avy-goto-line)))
-```
-
-These descriptions can be used by other code that deals with key bindings.
-For example, the GNU ELPA package which-key displays them when showing key
-bindings, instead of the plain command names.
-
-The `:commands` keyword takes either a symbol or a list of symbols.
+The `:commands` keyword likewise takes either a symbol or a list of symbols.
 
 **NOTE**: inside strings, special keys like `tab` or `F1`-`Fn` have to be written inside angle brackets, e.g. `"C-<up>"`.
 Standalone special keys (and some combinations) can be written in square brackets, e.g. `[tab]` instead of `"<tab>"`. The syntax for the keybindings is similar to
@@ -401,10 +387,13 @@ string `"%PDF"`.
 
 ## Hooks
 
-The `:hook` keyword allows adding functions onto package hooks. The
-following are equivalent:
+The `:hook` keyword allows adding functions onto package hooks. Thus,
+all of the following are equivalent:
 
 ``` elisp
+(use-package company
+  :hook prog-mode)
+
 (use-package company
   :hook (prog-mode . company-mode))
 
@@ -414,10 +403,13 @@ following are equivalent:
   (add-hook 'prog-mode-hook #'company-mode))
 ```
 
-And likewise, when multiple hooks should be applied, all of the
-following are also equivalent:
+And likewise, when multiple hooks should be applied, the following are also
+equivalent:
 
 ``` elisp
+(use-package company
+  :hook (prog-mode text-mode))
+
 (use-package company
   :hook ((prog-mode text-mode) . company-mode))
 
@@ -426,23 +418,14 @@ following are also equivalent:
          (text-mode . company-mode)))
 
 (use-package company
-  :hook (prog-mode . company-mode)
-  :hook (text-mode . company-mode))
-
-(use-package company
-  :hook
-  (prog-mode . company-mode)
-  (text-mode . company-mode))
-
-(use-package company
   :commands company-mode
   :init
   (add-hook 'prog-mode-hook #'company-mode)
   (add-hook 'text-mode-hook #'company-mode))
 ```
 
-When using `:hook`, omit the "-hook" suffix if you specify the hook
-explicitly, as this is appended by default. For example, the following
+When using `:hook` omit the "-hook" suffix if you specify the hook
+explicitly, as this is appended by default. For example the following
 code will not work as it attempts to add to the `prog-mode-hook-hook`
 which does not exist:
 
