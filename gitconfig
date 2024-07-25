@@ -1,20 +1,16 @@
 [user]
   name = brettlangdon
   email = me@brett.is
-  signingkey = A70042D88B95AA2B
-
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPG5FWUNREaSQ7t/vyc+jNaiq4nmaNC07535tnpN3hCj
 [credential]
   helper = store
-  
 [core]
   excludesfile = /Users/brettlangdon/.gitignore_global
   editor = emacs -nw -Q
   pager = delta --dark --keep-plus-minus-markers
   whitespace = trailing-space,space-before-tab
-  
 [interactive]
-    diffFilter = delta --color-only
-
+  diffFilter = delta --color-only
 [alias]
   st = status
   d = diff --color --minimal
@@ -29,33 +25,36 @@
 [grep]
   lineNumber = true
 [commit]
-	gpgsign = true
+  gpgsign = true
 [color]
-        ui = true
+  ui = true
 [color "diff-highlight"]
-       oldNormal = red bold
-       oldHighlight = red bold 52
-       newNormal = green bold
-       newHighlight = green bold 22
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 [color "diff"]
-       meta = 227
-       frag = magenta bold
-       commit = 227 bold
-       old = red bold
-       new = green bold
-       whitespace = red reverse
+  meta = 227
+  frag = magenta bold
+  commit = 227 bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
 [gpg]
-        program = gpg
+  format = ssh
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+	allowedSignersFile = "/Users/brettlangdon/.config/git/allowed_signers"
 [tag]
-	forceSignAnnotated = true
+  forceSignAnnotated = true
 [pull]
-	rebase = true
+  rebase = true
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 [github]
-	user = brettlangdon
+  user = brettlangdon
