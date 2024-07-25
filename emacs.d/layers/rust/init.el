@@ -4,6 +4,4 @@
   :ensure t
   :mode (("\\.rs\\'" . rust-mode))
   :init
-  (setq rust-format-on-save t)
-  :hook (rust-mode . (lambda ()
-                                 (lsp))))  ; or lsp-deferred
+  (setq rust-format-on-save t))

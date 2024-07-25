@@ -91,13 +91,13 @@
 
   ;; Save history
   (setq savehist-additional-variables '(mark-ring
-					                              global-mark-ring
-					                              search-ring
-					                              regexp-search-ring
-					                              extended-command-history)
-	      savehist-autosave-interval 60
-	      enable-recursive-minibuffers t
-	      history-length 1000)
+                                        global-mark-ring
+                                        search-ring
+                                        regexp-search-ring
+                                        extended-command-history)
+        savehist-autosave-interval 60
+        enable-recursive-minibuffers t
+        history-length 1000)
   (savehist-mode 1)
 
   ;; smart tab behavior - indent or complete
@@ -108,13 +108,13 @@
 (progn
   (defun enable-flycheck (hook)
     (add-hook hook
-	            ;; Flycheck
-	            ;; http://www.flycheck.org/en/latest/index.html
-	            `(lambda ()
-		             (use-package flycheck
-		               :diminish flycheck-mode
-		               :config
-		               (flycheck-mode))))))
+              ;; Flycheck
+              ;; http://www.flycheck.org/en/latest/index.html
+              `(lambda ()
+                 (use-package flycheck
+                   :diminish flycheck-mode
+                   :config
+                   (flycheck-mode))))))
 
 
 ;; -- Theme/Style setup --
@@ -165,11 +165,11 @@
     :ensure helm
     :diminish helm-mode
     :bind (("M-x" . helm-M-x)
-	         ("C-x b" . helm-mini)
-	         ("C-x C-f" . helm-find-files))
+           ("C-x b" . helm-mini)
+           ("C-x C-f" . helm-find-files))
     :init
     (setq helm-move-to-line-cycle-in-source t
-	        helm-M-x-always-save-history t)
+          helm-M-x-always-save-history t)
     :config
     (helm-mode 1))
 
@@ -192,7 +192,7 @@
     ;; Use helm-projectile
     :config
     (setq projectile-completion-system 'helm
-	        projectile-switch-project-action 'helm-projectile)
+          projectile-switch-project-action 'helm-projectile)
     (helm-projectile-on))
 
   ;; Configure helm-projectile
@@ -208,10 +208,10 @@
     :diminish company-mode
     :init
     (setq company-idle-delay 0.2
-	        company-minimum-prefix-length 2
-	        company-require-match nil
-	        company-dabbrev-ignore-case nil
-	        company-dabbrev-downcase nil)
+          company-minimum-prefix-length 2
+          company-require-match nil
+          company-dabbrev-ignore-case nil
+          company-dabbrev-downcase nil)
     :config
     (global-company-mode))
 
@@ -222,7 +222,7 @@
     :defer 1
     :init
     (setq ws-butler-keep-whitespace-before-point nil
-	        require-final-newline t)
+          require-final-newline t)
     :config
     (ws-butler-global-mode +1))
 
@@ -321,7 +321,11 @@
     (setq lsp-enable-imenu nil)
     (setq lsp-enable-snippet nil)
     (setq read-process-output-max (* 1024 1024)) ;; 1MB
-    (setq lsp-idle-delay 0.5))
+    (setq lsp-idle-delay 0.5)
+    :hook ((rust-mode . lsp)
+           (python-mode . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
 
     (use-package lsp-ui
       :config
@@ -332,13 +336,14 @@
       (setq lsp-ui-doc-border (face-foreground 'default))
       (setq lsp-ui-sideline-enable t)
       (setq lsp-ui-sideline-show-code-actions t)
-      (setq lsp-ui-sideline-delay 0.05))
+      (setq lsp-ui-sideline-delay 0.05)
+      :commands lsp-ui-mode)
 
     (use-package helm-lsp
       :defer t
       :commands helm-lsp-workspace-symbol)
 
-    (use-package wgrep-ag)    
+    (use-package wgrep-ag)
     (use-package quelpa)
     (use-package quelpa-use-package)
 
@@ -349,8 +354,8 @@
       (require 'llm-ollama)
       (setopt ellama-keymap-prefix "C-c e")
       (setopt ellama-provider
-		          (make-llm-ollama
-		           :chat-model "deepseek-coder:6.7b" :embedding-model "deepseek-coder:6.7b")))
+              (make-llm-ollama
+               :chat-model "deepseek-coder:6.7b" :embedding-model "deepseek-coder:6.7b")))
 
     (use-package copilot
       :quelpa (copilot :fetcher github
@@ -360,12 +365,13 @@
       :init
       (add-hook 'prog-mode-hook 'copilot-mode))
 
-    (use-package tree-sitter
-      :init
-      (global-tree-sitter-mode)
-      (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-    (use-package tree-sitter-langs)
-    
+    (use-package treesit-auto
+      :custom
+      (treesit-auto-install 'prompt)
+      :config
+      (treesit-auto-add-to-auto-mode-alist 'all)
+      (global-treesit-auto-mode))
+
     ;; ;; Turn `C-]' into a sticky "super" modifier.
     (define-key local-function-key-map [?\C-\]] 'event-apply-super-modifier)
     ;; Move the global binding for C-] to C-s-]
@@ -375,7 +381,7 @@
     ;; tab to complete copilot completions
     (define-key copilot-completion-map (kbd "C-c <tab>") 'copilot-accept-completion)
     (define-key copilot-completion-map (kbd "C-c TAB") 'copilot-accept-completion)
-    (define-key copilot-completion-map (kbd "C-c n n") 'copilot-next-completion)        
+    (define-key copilot-completion-map (kbd "C-c n n") 'copilot-next-completion)
   )
 
 ;; -- Load layers --
