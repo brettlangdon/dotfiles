@@ -1,7 +1,5 @@
 (use-package rust-mode
-  :defer t
-  :diminish rust-mode
+  :diminish rust-ts-mode
   :ensure t
-  :mode (("\\.rs\\'" . rust-mode))
   :init
   (setq rust-format-on-save t))

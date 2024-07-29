@@ -301,7 +301,9 @@
   ;;      (forge--format repo "https://%h/%o/%n/blob/%r/%f%L"
   ;;                     `((?r . ,rev) (?f . ,file) (?L . ,highlight))))))
 
-
+  (add-hook 'before-save-hook
+            'whitespace-cleanup)
+  
   (use-package lsp-mode
     :config
     (setq lsp-enable-file-watchers nil)
@@ -323,7 +325,9 @@
     (setq read-process-output-max (* 1024 1024)) ;; 1MB
     (setq lsp-idle-delay 0.5)
     :hook ((rust-mode . lsp)
+           (rust-ts-mode . lsp)
            (python-mode . lsp)
+           (python-ts-mode . lsp)           
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
 
