@@ -2,7 +2,9 @@
 (use-package lsp-pyright
   :defer t
   :ensure t
-  :init (setq lsp-pyright-auto-import-completions t)
+  :init
+  (setq lsp-pyright-auto-import-completions t)
+  (setq lsp-pyright-langserver-command "basedpyright")
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred

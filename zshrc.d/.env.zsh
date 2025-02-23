@@ -25,18 +25,13 @@ export EDITOR="emacs -nw -Q"
 export GOPATH=~/go
 
 # Configure virtualenv
-export WORKON_HOME=~/.env
 export PYTHONDONTWRITEBYTECODE=1
 
-# Configure dotnet
-# DEV: Opt out of telemetry
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-
-# Configure RVM
-export rvm_project_rvmrc=1
-
-# Configure NVM
-export NVM_DIR=~/.nvm
+# Configure Homebrew
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS=--require-sha
+export HOMEBREW_DIR=/opt/homebrew
+export HOMEBREW_BIN=/opt/homebrew/bin
 
 # Configure GPG
 export GPG_TTY=$(tty)
@@ -45,20 +40,24 @@ export GPG_TTY=$(tty)
 PATH="/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:$HOME/.local/bin"
 PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
-PATH="/usr/local/heroku/bin:$PATH"
-PATH="/usr/local/opt/python/libexec/bin:$PATH"
-PATH="/usr/local/opt/sqlite/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="~/.local/bin:/usr/local/bin:/usr/local/sbin:/sbin:$PATH"
-PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 PATH="$HOME/.poetry/bin:$PATH"
 PATH="/opt/homebrew/bin:$PATH"
 command -v pyenv 2>&1 > /dev/null && PATH="$(pyenv root)/shims:${PATH}"
-export PATH="$HOME/.rvm/bin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export PATH="$PATH"
 
 export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
 export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
+
+# Load 1password cli plugins
+op_plugins="$HOME/.config/op/plugins.sh"
+[ -f $op_plugins ] && source $op_plugins
+
+# Load zsh-fast-syntax-highlighting if it exists
+# DEV: brew install zsh-fast-syntax-highlighting
+zfsh=/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+[ -f $zfsh ] && source $zfsh
 
 # Load in any additional .env files provided
 for f in $(find $ZSH_DIR/ -maxdepth 1 -print -type f | grep '\.env\..*\.zsh' | sort)

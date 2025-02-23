@@ -40,8 +40,7 @@
   (setq current-dir (file-name-directory (if load-file-name load-file-name "~/.emacs.d/")))
 
   ;; Configure customization
-  (setq custom-file (expand-file-name "custom.el" current-dir))
-  (load custom-file)
+  (setq custom-file null-device)
 
   ;; Hide startup message
   (setq inhibit-startup-message t)
@@ -49,19 +48,28 @@
   ;; Configure package
   (require 'package)
 
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("melpa-stable" . "https://stable.melpa.org/packages/")
+                           ("gnu" . "https://elpa.gnu.org/packages/")
+                           ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+  (customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
+                                                      ("nongnu" . 80)
+                                                      ("stable" . 70)
+                                                      ("melpa"  . 0)))
+  (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+  ;; Initialize and refresh package contents again if needed
   (package-initialize)
-
-  (when (not package-archive-contents)
+  (unless package-archive-contents
     (package-refresh-contents))
 
-  ;; Configure use-package
-  ;; https://github.com/jwiegley/use-package
-  (eval-when-compile
-    (add-to-list 'load-path "~/.emacs.d/use-package/")
-    (require 'use-package))
+  ;; Install use-package if necessary
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+
+  ;; Ensure use-package is available at compile time
   (setq use-package-always-ensure t)
+  (eval-when-compile
+    (require 'use-package)))
 
   ;; Disable backup files and auto-saving
   (setq backup-inhibited t
@@ -100,6 +108,11 @@
         history-length 1000)
   (savehist-mode 1)
 
+  ;; Resolve symlinks when opening files, so that any operations are conducted
+  ;; from the file's true directory (like `find-file').
+  (setq find-file-visit-truename t
+        vc-follow-symlinks t)
+
   ;; smart tab behavior - indent or complete
   (setq tab-always-indent 'complete))
 
@@ -119,10 +132,6 @@
 
 ;; -- Theme/Style setup --
 (progn
-  (use-package monokai-theme
-    :config
-    (load-theme 'monokai t))
-
   ;; Enable global line numbers
   (global-display-line-numbers-mode t)
 
@@ -139,6 +148,14 @@
     :functions global-centered-cursor-mode
     :config
     (global-centered-cursor-mode))
+
+  (use-package doom-themes
+    :ensure t
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+          doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-tokyo-night t))
 
   ;; Enable doom-modeline
   ;; https://seagle0128.github.io/doom-modeline/
@@ -303,7 +320,7 @@
 
   (add-hook 'before-save-hook
             'whitespace-cleanup)
-  
+
   (use-package lsp-mode
     :config
     (setq lsp-enable-file-watchers nil)
@@ -325,10 +342,10 @@
     (setq read-process-output-max (* 1024 1024)) ;; 1MB
     (setq lsp-idle-delay 0.5)
     :hook ((rust-mode . lsp)
-           (rust-ts-mode . lsp)
-           (python-mode . lsp)
-           (python-ts-mode . lsp)           
-           (lsp-mode . lsp-enable-which-key-integration))
+          (rust-ts-mode . lsp)
+          (python-mode . lsp)
+          (python-ts-mode . lsp)
+          (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
 
     (use-package lsp-ui
@@ -348,8 +365,6 @@
       :commands helm-lsp-workspace-symbol)
 
     (use-package wgrep-ag)
-    (use-package quelpa)
-    (use-package quelpa-use-package)
 
     (use-package ellama
       :ensure t
@@ -362,19 +377,18 @@
                :chat-model "deepseek-coder:6.7b" :embedding-model "deepseek-coder:6.7b")))
 
     (use-package copilot
-      :quelpa (copilot :fetcher github
-                       :repo "copilot-emacs/copilot.el"
-                       :branch "main"
-                       :files ("dist" "*.el"))
+      :vc (:url "https://github.com/copilot-emacs/copilot.el"
+           :rev :newest
+           :branch "main")
       :init
       (add-hook 'prog-mode-hook 'copilot-mode))
 
     (use-package treesit-auto
-      :custom
-      (treesit-auto-install 'prompt)
-      :config
-      (treesit-auto-add-to-auto-mode-alist 'all)
-      (global-treesit-auto-mode))
+     :custom
+     (treesit-auto-install 'prompt)
+     :config
+     (treesit-auto-add-to-auto-mode-alist 'all)
+     (global-treesit-auto-mode))
 
     ;; ;; Turn `C-]' into a sticky "super" modifier.
     (define-key local-function-key-map [?\C-\]] 'event-apply-super-modifier)
