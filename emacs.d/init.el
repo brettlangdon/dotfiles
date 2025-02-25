@@ -133,7 +133,9 @@
 ;; -- Theme/Style setup --
 (progn
   ;; Enable global line numbers
-  (global-display-line-numbers-mode t)
+  (global-display-line-numbers-mode 1)
+  (setq line-number-mode t)
+  (setq column-number-mode t)
 
   ;; Hide menu bar
   (menu-bar-mode -1)

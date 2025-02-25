@@ -1,3 +1,6 @@
+;; Do not notify the user each time Python tries to guess the indentation offset
+(setq python-indent-guess-indent-offset-verbose nil)
+
 ;; lsp-mode
 (use-package lsp-pyright
   :defer t
