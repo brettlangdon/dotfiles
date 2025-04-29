@@ -145,7 +145,7 @@
 
   ;; Enable center cursor
   (use-package centered-cursor-mode
-    :defer t
+    :ensure t
     :load-path "vendor/"
     :functions global-centered-cursor-mode
     :config
@@ -163,7 +163,6 @@
   ;; https://seagle0128.github.io/doom-modeline/
   (use-package doom-modeline
     :ensure t
-    :defer t
     :hook (after-init . doom-modeline-mode)))
 
 
@@ -172,6 +171,7 @@
   ;; Configure osx-clipboard
   ;; https://github.com/joddie/osx-clipboard-mode
   (use-package osx-clipboard
+    :ensure t
     :diminish osx-clipboard-mode
     :config
     (osx-clipboard-mode t))
@@ -180,7 +180,6 @@
   ;; https://emacs-helm.github.io/helm/
   (setq personal-keybindings nil)
   (use-package helm-config
-    :defer t
     :ensure helm
     :diminish helm-mode
     :bind (("M-x" . helm-M-x)
@@ -193,13 +192,13 @@
     (helm-mode 1))
 
   (use-package helm-ag
-    :defer t
+    :ensure t
     :requires helm)
 
   ;; Configure projectile
   ;; https://www.projectile.mx/en/latest/
   (use-package projectile
-    :defer 1
+    :ensure t
     :delight '(:eval (concat " " (projectile-project-name)))
     :functions (projectile-project-p
                 projectile-project-root
@@ -217,13 +216,13 @@
   ;; Configure helm-projectile
   ;; https://github.com/bbatsov/helm-projectile
   (use-package helm-projectile
-    :defer 1)
+    :ensure t)
 
 
   ;; Configure company-mode
   ;; http://company-mode.github.io/
   (use-package company
-    :defer 1
+    :ensure t
     :diminish company-mode
     :init
     (setq company-idle-delay 0.2
@@ -238,7 +237,7 @@
   ;; Configure ws-butler
   ;; https://github.com/lewang/ws-butler
   (use-package ws-butler
-    :defer 1
+    :ensure t
     :init
     (setq ws-butler-keep-whitespace-before-point nil
           require-final-newline t)
@@ -249,40 +248,39 @@
   ;; Configure diminish
   ;; https://github.com/myrjola/diminish.el
   (use-package diminish
-    :defer t)
-
+    :ensure t)
 
   ;; Smartparens
   ;; https://github.com/Fuco1/smartparens
   (use-package smartparens
-    :defer t
+    :ensure t
     :diminish
     :config
     (smartparens-global-mode))
 
   (use-package auth-source
-    :defer t
+    :ensure t
     :config
     (customize-set-variable 'auth-sources (quote (macos-keychain-internet macos-keychain-generic))))
 
   ;; ;; Magit
   ;; ;; https://magit.vc/
-  ;; (use-package magit
-  ;;   :defer 5
-  ;;   :diminish)
+  (use-package magit
+    :ensure t
+    :diminish)
 
   ;; ;; Forge
-  ;; (use-package forge
-  ;;   :defer 5
-  ;;   :after magit
-  ;;   :init
-  ;;   (setq forge-topic-list-limit '(100 . 0 ))
-  ;;   (setq forge-topic-list-columns
-  ;;         '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
-  ;;           ("Title" 50 t nil title  nil)
-  ;;           ("State" 10 t nil state nil)
-  ;;           ("Author" 15 t nil author nil)
-  ;;           )))
+  (use-package forge
+    :ensure t
+    :after magit
+    :init
+    (setq forge-topic-list-limit '(100 . 0 ))
+    (setq forge-topic-list-columns
+          '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
+            ("Title" 50 t nil title  nil)
+            ("State" 10 t nil state nil)
+            ("Author" 15 t nil author nil)
+            )))
 
   ;; (defun forge-browse-buffer-file ()
   ;;   (interactive)
@@ -324,6 +322,7 @@
             'whitespace-cleanup)
 
   (use-package lsp-mode
+    :ensure t
     :config
     (setq lsp-enable-file-watchers nil)
     (setq lsp-auto-guess-root t)
@@ -351,6 +350,7 @@
     :commands lsp)
 
     (use-package lsp-ui
+      :ensure t
       :config
       (setq lsp-ui-doc-enable t)
       (setq lsp-ui-doc-header t)
@@ -363,34 +363,54 @@
       :commands lsp-ui-mode)
 
     (use-package helm-lsp
-      :defer t
+      :ensure t
       :commands helm-lsp-workspace-symbol)
 
-    (use-package wgrep-ag)
+    (use-package wgrep-ag
+      :ensure t)
 
-    (use-package ellama
-      :ensure t
-      :init
-      (setopt ellama-language "English")
-      (require 'llm-ollama)
-      (setopt ellama-keymap-prefix "C-c e")
-      (setopt ellama-provider
-              (make-llm-ollama
-               :chat-model "deepseek-coder:6.7b" :embedding-model "deepseek-coder:6.7b")))
+    ;; (use-package ellama
+    ;;   :ensure t
+    ;;   :init
+    ;;   (setopt ellama-language "English")
+    ;;   (require 'llm-ollama)
+    ;;   (setopt ellama-keymap-prefix "C-c e")
+    ;;   (setopt ellama-provider
+    ;;           (make-llm-ollama
+    ;;            :chat-model "deepseek-coder:6.7b" :embedding-model "deepseek-coder:6.7b")))
 
     (use-package copilot
-      :vc (:url "https://github.com/copilot-emacs/copilot.el"
-           :rev :newest
-           :branch "main")
+      :ensure t
       :init
       (add-hook 'prog-mode-hook 'copilot-mode))
 
+    (use-package vterm
+      :ensure t)
+
+    (use-package aidermacs
+      :vc (:url "https://github.com/MatthewZMD/aidermacs" :rev "304543cbd756e0c343b8e096dac14faf0920d9cc")
+      :ensure t
+      :bind (("C-c a" . aidermacs-transient-menu))
+      :config
+      ;; Use vterm backend (default is comint)
+      (setq aidermacs-backend 'vterm)
+      ;; Enable file watching
+      (setq aidermacs-watch-files t)
+      ;; Enable/disable showing diffs after changes (default: t)
+      (setq aidermacs-show-diff-after-change t)
+      :custom
+      (setq aidermacs-extra-args '("--thinking-tokens" "16k"))
+      (aidermacs-use-architect-mode t)
+      (aidermacs-default-model "anthropic/claude-3-7-sonnet-20250219")
+      (aidermacs-architect-model "anthropic/claude-3-5-haiku-20241022"))
+
     (use-package treesit-auto
-     :custom
-     (treesit-auto-install 'prompt)
-     :config
-     (treesit-auto-add-to-auto-mode-alist 'all)
-     (global-treesit-auto-mode))
+      :ensure t
+      :custom
+      (treesit-auto-install 'prompt)
+      :config
+      (treesit-auto-add-to-auto-mode-alist 'all)
+      (global-treesit-auto-mode))
 
     ;; ;; Turn `C-]' into a sticky "super" modifier.
     (define-key local-function-key-map [?\C-\]] 'event-apply-super-modifier)

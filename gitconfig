@@ -4,6 +4,7 @@
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPG5FWUNREaSQ7t/vyc+jNaiq4nmaNC07535tnpN3hCj
 
 [alias]
+  d = diff
   dc = diff --cached
   dm = diff origin/main
 
@@ -82,3 +83,6 @@
 [tag]
   sort = version:refname
   forceSignAnnotated = true
+
+[url "git@github.com:"]
+ insteadOf = https://github.com/

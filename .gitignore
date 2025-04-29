@@ -21,3 +21,4 @@ emacs.d/eshell
 emacs.d/multisession/
 emacs.d/quelpa/
 emacs.d/tree-sitter/
+.aider*
